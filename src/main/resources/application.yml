@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: Pick-Car
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+
+security:
+  whitelist: ${SECURITY_WHITELIST}
