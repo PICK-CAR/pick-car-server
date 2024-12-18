@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthFacade {
 
-    private static final String USER_RESOURCE_LOCATION = "users/";
+    private static final String MEMBER_RESOURCE_LOCATION = "members/";
 
     private final AuthService authService;
     private final MemberService memberService;
@@ -21,7 +21,7 @@ public class AuthFacade {
     public String signup(MemberRequest memberRequest) {
         String encryptedPassword = authService.encryptPassword(memberRequest.password());
         Long memberId = memberService.create(memberRequest, encryptedPassword);
-        return USER_RESOURCE_LOCATION + memberId;
+        return MEMBER_RESOURCE_LOCATION + memberId;
     }
 
     public TokenResponse login(LoginRequest loginRequest) {
