@@ -2,12 +2,16 @@ package dev.bang.pickcar.member.entity;
 
 import static dev.bang.pickcar.member.MemberConstant.MAX_NICKNAME_LENGTH;
 import static dev.bang.pickcar.member.MemberConstant.MIN_NICKNAME_LENGTH;
-import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_FORMAT;
+import static dev.bang.pickcar.member.MemberTestData.VALID_BIRTHDAY;
+import static dev.bang.pickcar.member.MemberTestData.VALID_EMAIL;
+import static dev.bang.pickcar.member.MemberTestData.VALID_NAME;
+import static dev.bang.pickcar.member.MemberTestData.VALID_NICKNAME;
+import static dev.bang.pickcar.member.MemberTestData.VALID_PASSWORD;
+import static dev.bang.pickcar.member.MemberTestData.VALID_PHONE_NUMBER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,13 +20,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("회원 테스트")
 class MemberTest {
-
-    private static final String VALID_NAME = "홍길동";
-    private static final String VALID_NICKNAME = "홍홍홍";
-    private static final String VALID_EMAIL = "hong@gmail.com";
-    private static final String VALID_PASSWORD = "5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8";
-    private static final LocalDate VALID_BIRTHDAY = LocalDate.of(2000, 1, 1);
-    private static final String VALID_PHONE_NUMBER = PHONE_NUMBER_FORMAT;
 
     @DisplayName("정상적인 회원 생성은 예외가 발생하지 않는다.")
     @Test
