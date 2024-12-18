@@ -1,5 +1,8 @@
 package dev.bang.pickcar.member.entity;
 
+import static dev.bang.pickcar.member.MemberConstant.MAX_NICKNAME_LENGTH;
+import static dev.bang.pickcar.member.MemberConstant.MIN_NICKNAME_LENGTH;
+import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_FORMAT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -19,7 +22,7 @@ class MemberTest {
     private static final String VALID_EMAIL = "hong@gmail.com";
     private static final String VALID_PASSWORD = "5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8";
     private static final LocalDate VALID_BIRTHDAY = LocalDate.of(2000, 1, 1);
-    private static final String VALID_PHONE_NUMBER = "010-0000-0000";
+    private static final String VALID_PHONE_NUMBER = PHONE_NUMBER_FORMAT;
 
     @DisplayName("정상적인 회원 생성은 예외가 발생하지 않는다.")
     @Test
@@ -85,10 +88,11 @@ class MemberTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("회원 생성 시 닉네임이 2~10자가 아닌 경우 예외가 발생한다.")
+    @DisplayName("회원 생성 시 닉네임 길이가 규칙에 맞지 않는 경우 예외가 발생한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"난", "닉네임이11자가넘어가"})
-    void shouldThrowException_WhenNicknameIsNotValid(String nickname) {
+    @ValueSource(ints = {MIN_NICKNAME_LENGTH - 1, MAX_NICKNAME_LENGTH + 1})
+    void shouldThrowException_WhenNicknameIsNotValid(int nicknameLength) {
+        String nickname = "a".repeat(nicknameLength);
         assertThatThrownBy(() ->
                 new Member(
                         VALID_NAME,

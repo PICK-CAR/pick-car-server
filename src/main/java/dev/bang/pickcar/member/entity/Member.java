@@ -1,5 +1,10 @@
 package dev.bang.pickcar.member.entity;
 
+import static dev.bang.pickcar.member.MemberConstant.EMAIL_REGEX;
+import static dev.bang.pickcar.member.MemberConstant.MAX_NICKNAME_LENGTH;
+import static dev.bang.pickcar.member.MemberConstant.MIN_NICKNAME_LENGTH;
+import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_REGEX;
+
 import dev.bang.pickcar.entitiy.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,11 +24,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity {
-
-    private static final int MIN_NICKNAME_LENGTH = 2;
-    private static final int MAX_NICKNAME_LENGTH = 10;
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    private static final String PHONE_NUMBER_REGEX = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
