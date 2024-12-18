@@ -1,4 +1,4 @@
-package dev.bang.pickcar.entitiy.member;
+package dev.bang.pickcar.member.entity;
 
 public enum MemberRole {
 

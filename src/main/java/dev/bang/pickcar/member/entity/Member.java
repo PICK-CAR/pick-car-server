@@ -1,4 +1,4 @@
-package dev.bang.pickcar.entitiy.member;
+package dev.bang.pickcar.member.entity;
 
 import dev.bang.pickcar.entitiy.BaseTimeEntity;
 import jakarta.persistence.Column;

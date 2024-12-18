@@ -1,7 +1,7 @@
-package dev.bang.pickcar.entitiy.member;
+package dev.bang.pickcar.member.entity;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.time.LocalDate;
