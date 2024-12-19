@@ -23,6 +23,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private static final String AUTH_HEADER = "Authorization";
     private static final String TOKEN_TYPE = "Bearer";
+    private static final String MEMBER_ROLE_PREFIX = "ROLE_";
 
     private final TokenProvider tokenProvider;
 
@@ -67,7 +68,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private List<SimpleGrantedAuthority> getAuthority(String memberRole) {
-        return List.of(new SimpleGrantedAuthority(memberRole));
+        return List.of(new SimpleGrantedAuthority(MEMBER_ROLE_PREFIX + memberRole));
     }
 
     private UserDetails getUserDetails(String memberId, List<SimpleGrantedAuthority> authorities) {
