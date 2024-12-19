@@ -1,5 +1,6 @@
 package dev.bang.pickcar.auth.controller;
 
+import dev.bang.pickcar.auth.controller.docs.AuthApiDocs;
 import dev.bang.pickcar.auth.controller.facade.AuthFacade;
 import dev.bang.pickcar.auth.dto.LoginRequest;
 import dev.bang.pickcar.auth.dto.TokenResponse;
@@ -15,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("auth")
-public class AuthController {
+public class AuthController implements AuthApiDocs {
 
     private final AuthFacade authFacade;
 
     @PostMapping("signup")
+    @Override
     public ResponseEntity<Void> signup(@RequestBody MemberRequest memberRequest) {
         URI resourceUri = URI.create(authFacade.signup(memberRequest));
         return ResponseEntity.created(resourceUri)
@@ -27,6 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("login")
+    @Override
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
         TokenResponse token = authFacade.login(loginRequest);
         return ResponseEntity.ok(token);
