@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: Pick-Car
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+
+security:
+  whitelist: ${SECURITY_WHITELIST}
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    expiration-time: ${JWT_EXPIRATION_TIME}
+
+swagger:
+  dev-server-url: ${SWAGGER_DEV_SERVER_URL}
+  local-server-url: ${SWAGGER_LOCAL_SERVER_URL}
