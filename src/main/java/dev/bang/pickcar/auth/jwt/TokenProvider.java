@@ -9,14 +9,16 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@EnableConfigurationProperties(SecurityProperties.class)
 public class TokenProvider {
 
-    private static final String MEMBER_ID_KEY = "memberId";
-    private static final String MEMBER_ROLE_KEY = "memberRole";
+    private static final String MEMBER_ID_KEY = "id";
+    private static final String MEMBER_ROLE_KEY = "role";
 
     private final SecurityProperties securityProperties;
 
@@ -28,7 +30,6 @@ public class TokenProvider {
     private String buildJwtToken(Long memberId, String memberRole) {
         Date validity = calculateExpiration(getExpirationTime());
         return Jwts.builder()
-                .subject(memberId.toString())
                 .claim(MEMBER_ID_KEY, memberId)
                 .claim(MEMBER_ROLE_KEY, memberRole)
                 .expiration(validity)
