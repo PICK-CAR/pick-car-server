@@ -2,7 +2,7 @@ package dev.bang.pickcar.auth.jwt;
 
 import dev.bang.pickcar.auth.dto.MemberAuthResponse;
 import dev.bang.pickcar.auth.dto.TokenResponse;
-import dev.bang.pickcar.config.SecurityProperties;
+import dev.bang.pickcar.config.properties.SecurityProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
