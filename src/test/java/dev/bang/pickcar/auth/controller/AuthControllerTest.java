@@ -9,7 +9,7 @@ import static dev.bang.pickcar.member.MemberTestData.VALID_PHONE_NUMBER;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 import dev.bang.pickcar.auth.dto.LoginRequest;
-import dev.bang.pickcar.member.MemberTestData;
+import dev.bang.pickcar.member.MemberTestHelper;
 import dev.bang.pickcar.member.dto.MemberRequest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -35,6 +36,9 @@ class AuthControllerTest {
     @LocalServerPort
     private int port;
 
+    @Autowired
+    private MemberTestHelper memberTestHelper;
+
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
@@ -43,7 +47,7 @@ class AuthControllerTest {
     @DisplayName("회원가입 테스트")
     @Test
     void signup() {
-        MemberRequest signupRequest = MemberTestData.createMemberRequest();
+        MemberRequest signupRequest = memberTestHelper.createMemberRequest();
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -58,7 +62,7 @@ class AuthControllerTest {
     @ParameterizedTest
     @NullAndEmptySource
     void shouldThrowException_WhenNameIsInvalid(String invalidName) {
-        MemberRequest signupRequest = MemberTestData.createCustomMemberRequest(
+        MemberRequest signupRequest = memberTestHelper.createCustomMemberRequest(
                 invalidName,
                 VALID_NICKNAME,
                 VALID_EMAIL,
@@ -79,7 +83,7 @@ class AuthControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "\n", "\t", "\r"})
     void shouldThrowException_WhenRequestNicknameIsInvalid(String invalidNickname) {
-        MemberRequest signupRequest = MemberTestData.createCustomMemberRequest(
+        MemberRequest signupRequest = memberTestHelper.createCustomMemberRequest(
                 VALID_NAME,
                 invalidNickname,
                 VALID_EMAIL,
@@ -100,7 +104,7 @@ class AuthControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "\n", "\t", "\r", "invalid", "invalid.com", "invalid@com"})
     void shouldThrowException_WhenRequestEmailIsInvalid(String invalidEmail) {
-        MemberRequest signupRequest = MemberTestData.createCustomMemberRequest(
+        MemberRequest signupRequest = memberTestHelper.createCustomMemberRequest(
                 VALID_NAME,
                 VALID_NICKNAME,
                 invalidEmail,
@@ -121,7 +125,7 @@ class AuthControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "\n", "\t", "\r", "invalid",  "0100000-0000", "01000000000", "010-00000000"})
     void shouldThrowException_WhenRequestPhoneNumberIsInvalid(String invalidPhoneNumber) {
-        MemberRequest signupRequest = MemberTestData.createCustomMemberRequest(
+        MemberRequest signupRequest = memberTestHelper.createCustomMemberRequest(
                 VALID_NAME,
                 VALID_NICKNAME,
                 VALID_EMAIL,
@@ -141,7 +145,7 @@ class AuthControllerTest {
     @DisplayName("로그인 테스트")
     @Test
     void login() {
-        MemberRequest signupRequest = MemberTestData.createMemberRequest();
+        MemberRequest signupRequest = memberTestHelper.createMemberRequest();
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -150,7 +154,7 @@ class AuthControllerTest {
                 .then().log().all()
                 .statusCode(201);
 
-        LoginRequest loginRequest = MemberTestData.createLoginRequest();
+        LoginRequest loginRequest = memberTestHelper.createLoginRequest();
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
@@ -163,7 +167,7 @@ class AuthControllerTest {
     @DisplayName("로그인 요청 본문이 올바르지 않은 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {
-            ", " + VALID_PASSWORD,
+            " , " + VALID_PASSWORD,
             VALID_EMAIL + ", ",
     })
     void shouldThrowException_WhenLoginRequestBodyIsInvalid(String invalidRequest) {
