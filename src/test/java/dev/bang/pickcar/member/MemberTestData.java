@@ -2,8 +2,6 @@ package dev.bang.pickcar.member;
 
 import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_FORMAT;
 
-import dev.bang.pickcar.auth.dto.LoginRequest;
-import dev.bang.pickcar.member.dto.MemberRequest;
 import java.time.LocalDate;
 
 public class MemberTestData {
@@ -16,34 +14,5 @@ public class MemberTestData {
     public static final String VALID_PHONE_NUMBER = PHONE_NUMBER_FORMAT;
 
     private MemberTestData() {
-    }
-
-    public static MemberRequest createMemberRequest() {
-        return new MemberRequest(
-                VALID_NAME,
-                VALID_NICKNAME,
-                VALID_EMAIL,
-                VALID_PASSWORD,
-                VALID_BIRTHDAY,
-                VALID_PHONE_NUMBER
-        );
-    }
-
-    public static MemberRequest createCustomMemberRequest(Object... args) {
-        return new MemberRequest(
-                (String) args[0],
-                (String) args[1],
-                (String) args[2],
-                (String) args[3],
-                (LocalDate) args[4],
-                (String) args[5]
-        );
-    }
-
-    public static LoginRequest createLoginRequest() {
-        return new LoginRequest(
-                VALID_EMAIL,
-                VALID_PASSWORD
-        );
     }
 }
