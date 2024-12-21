@@ -11,8 +11,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,6 +21,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private static final String AUTH_HEADER = "Authorization";
     private static final String TOKEN_TYPE = "Bearer";
+    private static final String MEMBER_ROLE_PREFIX = "ROLE_";
 
     private final TokenProvider tokenProvider;
 
@@ -62,18 +61,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(String memberId, String memberRole) {
         var authorities = getAuthority(memberRole);
-        UserDetails userDetails = getUserDetails(memberId, authorities);
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(memberId, null, authorities);
     }
 
     private List<SimpleGrantedAuthority> getAuthority(String memberRole) {
-        return List.of(new SimpleGrantedAuthority(memberRole));
-    }
-
-    private UserDetails getUserDetails(String memberId, List<SimpleGrantedAuthority> authorities) {
-        return User.withUsername(memberId)
-                .authorities(authorities)
-                .password("")
-                .build();
+        return List.of(new SimpleGrantedAuthority(MEMBER_ROLE_PREFIX + memberRole));
     }
 }
