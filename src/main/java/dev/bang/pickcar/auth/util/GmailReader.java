@@ -41,6 +41,7 @@ public class GmailReader implements MailReader {
     private void init() {
         JavaMailSenderImpl mailSender = createMailSender();
         session = mailSender.getSession();
+        log.info("GmailReader 초기화 완료");
     }
 
     @Override
@@ -77,6 +78,8 @@ public class GmailReader implements MailReader {
         props.put("mail.imaps.host", mailProperties.imapServer());
         props.put("mail.imaps.port", mailProperties.imapPort());
         props.put("mail.imaps.ssl.enable", "true");
+        props.put("mail.imaps.starttls.enable", "true");
+        props.put("mail.imaps.auth", "true");
     }
 
     private Folder openInbox() throws MessagingException {
@@ -84,6 +87,7 @@ public class GmailReader implements MailReader {
         store.connect(mailProperties.imapServer(), mailProperties.account(), mailProperties.password());
         Folder inbox = store.getFolder(FOLDER_INBOX);
         inbox.open(Folder.READ_ONLY);
+        log.info("GmailReader INBOX 폴더 열기 완료");
         return inbox;
     }
 
