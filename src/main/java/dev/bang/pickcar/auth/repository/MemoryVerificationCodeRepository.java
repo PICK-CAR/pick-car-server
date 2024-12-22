@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Profile("!test")
+@Profile("local")
 public class MemoryVerificationCodeRepository implements VerificationCodeRepository {
 
     private final Map<String, String> verificationCodeMap = new HashMap<>();
