@@ -13,6 +13,8 @@ public class MemberTestData {
     public static final LocalDate VALID_BIRTHDAY = LocalDate.of(2000, 1, 1);
     public static final String VALID_PHONE_NUMBER = PHONE_NUMBER_FORMAT;
 
+    public static final String VERIFICATION_CODE = "123456";
+
     private MemberTestData() {
     }
 }

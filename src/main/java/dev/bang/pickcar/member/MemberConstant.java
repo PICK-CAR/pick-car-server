@@ -10,8 +10,8 @@ public class MemberConstant {
     public static final String BIRTHDAY_REGEX = "\\d{4}-\\d{2}-\\d{2}";
     public static final String BIRTHDAY_FORMAT = "yyyy-MM-dd";
 
-    public static final String PHONE_NUMBER_REGEX = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}";
-    public static final String PHONE_NUMBER_FORMAT = "010-0000-0000";
+    public static final String PHONE_NUMBER_REGEX = "^010\\d{8}$";
+    public static final String PHONE_NUMBER_FORMAT = "01000000000";
 
     private MemberConstant() {
     }

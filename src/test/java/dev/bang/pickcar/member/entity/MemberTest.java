@@ -168,7 +168,7 @@ class MemberTest {
 
     @DisplayName("회원 생성 시 휴대폰 번호 형식이 올바르지 않은 경우 예외가 발생한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"01000000000", "010-0000-000", "010-0000-00000", "010-0000-000A"})
+    @ValueSource(strings = {"010-0000-0000", "01100000000", "0100000000000", "032-000-0000"})
     void shouldThrowException_WhenPhoneNumberIsNotValid(String phoneNumber) {
         assertThatThrownBy(() ->
                 new Member(

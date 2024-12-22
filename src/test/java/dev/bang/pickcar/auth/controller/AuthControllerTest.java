@@ -123,7 +123,7 @@ class AuthControllerTest {
 
     @DisplayName("잘못된 휴대폰 번호 형식으로 회원가입 요청을 보내면 예외가 발생한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"", "\n", "\t", "\r", "invalid",  "0100000-0000", "01000000000", "010-00000000"})
+    @ValueSource(strings = {"", "\n", "\t", "\r", "invalid",  "0100000-0000", "010-00000000", "010-0000-0000"})
     void shouldThrowException_WhenRequestPhoneNumberIsInvalid(String invalidPhoneNumber) {
         MemberRequest signupRequest = memberTestHelper.createCustomMemberRequest(
                 VALID_NAME,

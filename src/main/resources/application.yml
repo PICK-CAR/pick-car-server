@@ -16,3 +16,9 @@ security:
 swagger:
   dev-server-url: ${SWAGGER_DEV_SERVER_URL}
   local-server-url: ${SWAGGER_LOCAL_SERVER_URL}
+
+mail:
+  imap-server: ${MAIL_IMAP_SERVER}
+  imap-port: ${MAIL_IMAP_PORT}
+  account: ${MAIL_ACCOUNT}
+  password: ${MAIL_PASSWORD}

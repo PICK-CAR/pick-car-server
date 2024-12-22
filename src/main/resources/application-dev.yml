@@ -10,6 +10,12 @@ spring:
       hibernate:
         format_sql: true
 
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
   datasource:
     url: ${LOCAL_DATABASE_URL}
     username: ${LOCAL_DATABASE_USERNAME}
