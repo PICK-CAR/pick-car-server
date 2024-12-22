@@ -25,4 +25,18 @@ public interface AuthApiDocs {
             @ApiResponse(responseCode = "400", description = "잘못된 요청")
     })
     ResponseEntity<TokenResponse> login(LoginRequest loginRequest);
+
+    @Operation(summary = "인증번호 발급", description = "휴대폰 번호 인증을 위한 인증번호를 발급합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증번호 발급 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    ResponseEntity<String> issueVerificationCode(String phoneNumber);
+
+    @Operation(summary = "인증번호 확인", description = "휴대폰 번호 인증을 위한 인증번호를 확인합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증번호 확인 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    ResponseEntity<Void> verifyVerificationNumber(String phoneNumber);
 }

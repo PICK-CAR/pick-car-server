@@ -16,6 +16,9 @@ public class MemberService {
 
     @Transactional
     public Long create(MemberRequest memberRequest, String encryptedPassword) {
+        if (memberRepository.existsByEmail(memberRequest.email())) {
+            throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+        }
         Member member = memberRequest.toMember(encryptedPassword);
         return memberRepository.save(member)
                 .getId();
