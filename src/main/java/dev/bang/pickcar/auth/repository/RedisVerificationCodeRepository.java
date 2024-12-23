@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Profile("dev")
+@Profile("!test")
 @RequiredArgsConstructor
 public class RedisVerificationCodeRepository implements VerificationCodeRepository {
 

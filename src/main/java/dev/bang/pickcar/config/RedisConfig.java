@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@Profile("dev")
+@Profile("!test")
 public class RedisConfig {
 
     /**
