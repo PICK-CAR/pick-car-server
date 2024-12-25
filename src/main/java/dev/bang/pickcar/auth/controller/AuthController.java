@@ -5,6 +5,7 @@ import dev.bang.pickcar.auth.controller.facade.AuthFacade;
 import dev.bang.pickcar.auth.dto.LoginRequest;
 import dev.bang.pickcar.auth.dto.TokenResponse;
 import dev.bang.pickcar.member.dto.MemberRequest;
+import jakarta.validation.Valid;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class AuthController implements AuthApiDocs {
 
     @PostMapping("signup")
     @Override
-    public ResponseEntity<Void> signup(@RequestBody MemberRequest memberRequest) {
+    public ResponseEntity<Void> signup(@RequestBody @Valid MemberRequest memberRequest) {
         URI resourceUri = URI.create(authFacade.signup(memberRequest));
         return ResponseEntity.created(resourceUri)
                 .build();
@@ -31,7 +32,7 @@ public class AuthController implements AuthApiDocs {
 
     @PostMapping("login")
     @Override
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         TokenResponse token = authFacade.login(loginRequest);
         return ResponseEntity.ok(token);
     }
