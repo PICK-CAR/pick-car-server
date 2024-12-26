@@ -27,6 +27,6 @@ public class GlobalExceptionHandler {
                         .getFieldErrors()
                         .stream()
                         .map(FieldError::getDefaultMessage)
-                        .collect(Collectors.joining(", ")));
+                        .collect(Collectors.joining("\n")));
     }
 }
