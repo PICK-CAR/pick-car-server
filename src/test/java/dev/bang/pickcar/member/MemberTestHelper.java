@@ -1,8 +1,6 @@
 package dev.bang.pickcar.member;
 
-import static dev.bang.pickcar.member.MemberTestData.ADMIN_EMAIL;
 import static dev.bang.pickcar.member.MemberTestData.ADMIN_NAME;
-import static dev.bang.pickcar.member.MemberTestData.ADMIN_NICKNAME;
 import static dev.bang.pickcar.member.MemberTestData.ADMIN_PASSWORD;
 import static dev.bang.pickcar.member.MemberTestData.ADMIN_PHONE_NUMBER;
 import static dev.bang.pickcar.member.MemberTestData.VALID_BIRTHDAY;
@@ -31,6 +29,7 @@ public class MemberTestHelper {
 
     @Autowired
     private MemberRepository memberRepository;
+
     @Autowired
     private TokenProvider tokenProvider;
 
