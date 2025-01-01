@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,5 +34,20 @@ public class AuthController implements AuthApiDocs {
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
         TokenResponse token = authFacade.login(loginRequest);
         return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("verification/issue")
+    @Override
+    public ResponseEntity<String> issueVerificationCode(@RequestParam String phoneNumber) {
+        String verificationCode = authFacade.issueVerificationCode(phoneNumber);
+        return ResponseEntity.ok(verificationCode);
+    }
+
+    @PostMapping("verification/verify")
+    @Override
+    public ResponseEntity<Void> verifyVerificationNumber(@RequestParam String phoneNumber) {
+        authFacade.verifyPhoneNumber(phoneNumber);
+        return ResponseEntity.ok()
+                .build();
     }
 }

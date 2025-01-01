@@ -1,4 +1,4 @@
-package dev.bang.pickcar.config;
+package dev.bang.pickcar.config.properties;
 
 import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;

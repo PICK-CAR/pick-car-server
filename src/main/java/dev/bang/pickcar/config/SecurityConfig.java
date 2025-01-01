@@ -1,6 +1,7 @@
 package dev.bang.pickcar.config;
 
 import dev.bang.pickcar.auth.jwt.JwtFilter;
+import dev.bang.pickcar.config.properties.SecurityProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

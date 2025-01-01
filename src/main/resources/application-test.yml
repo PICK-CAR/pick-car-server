@@ -11,10 +11,9 @@ spring:
         format_sql: true
 
   datasource:
-    url: ${LOCAL_DATABASE_URL}
-    username: ${LOCAL_DATABASE_USERNAME}
-    password: ${LOCAL_DATABASE_PASSWORD}
-    driver-class-name: org.h2.Driver
+    url: ${TEST_DATABASE_URL}
+    username: ${TEST_DATABASE_USERNAME}
+    password: ${TEST_DATABASE_PASSWORD}
 
   h2:
     console:
