@@ -1,7 +1,10 @@
 package dev.bang.pickcar.exception;
 
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,5 +17,16 @@ public class GlobalExceptionHandler {
         log.warn("IllegalArgumentException: {}", exception.getMessage());
         return ResponseEntity.badRequest()
                 .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        log.warn("MethodArgumentNotValidException: {}", exception.getMessage());
+        return ResponseEntity.badRequest()
+                .body(exception.getBindingResult()
+                        .getFieldErrors()
+                        .stream()
+                        .map(FieldError::getDefaultMessage)
+                        .collect(Collectors.joining("\n")));
     }
 }

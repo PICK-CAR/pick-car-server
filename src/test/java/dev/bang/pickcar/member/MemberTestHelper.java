@@ -1,5 +1,8 @@
 package dev.bang.pickcar.member;
 
+import static dev.bang.pickcar.member.MemberTestData.ADMIN_NAME;
+import static dev.bang.pickcar.member.MemberTestData.ADMIN_PASSWORD;
+import static dev.bang.pickcar.member.MemberTestData.ADMIN_PHONE_NUMBER;
 import static dev.bang.pickcar.member.MemberTestData.VALID_BIRTHDAY;
 import static dev.bang.pickcar.member.MemberTestData.VALID_EMAIL;
 import static dev.bang.pickcar.member.MemberTestData.VALID_NAME;
@@ -12,6 +15,7 @@ import dev.bang.pickcar.auth.dto.MemberAuthResponse;
 import dev.bang.pickcar.auth.jwt.TokenProvider;
 import dev.bang.pickcar.member.dto.MemberRequest;
 import dev.bang.pickcar.member.entity.Member;
+import dev.bang.pickcar.member.entity.MemberRole;
 import dev.bang.pickcar.member.repository.MemberRepository;
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,6 +29,7 @@ public class MemberTestHelper {
 
     @Autowired
     private MemberRepository memberRepository;
+
     @Autowired
     private TokenProvider tokenProvider;
 
@@ -61,16 +66,34 @@ public class MemberTestHelper {
 
     public Member createMember() {
         long uniqueValue = counter.incrementAndGet();
-        String uniqueEmail = String.format("test%d@example.com", uniqueValue);
         String uniqueNickname = String.format("tester%d", uniqueValue);
-        return memberRepository.save(new Member(
-                VALID_NAME,
-                uniqueNickname,
-                uniqueEmail,
-                VALID_PASSWORD,
-                VALID_BIRTHDAY,
-                VALID_PHONE_NUMBER
-        ));
+        String uniqueEmail = String.format("test%d@example.com", uniqueValue);
+        return memberRepository.save(
+                new Member(
+                        VALID_NAME,
+                        uniqueNickname,
+                        uniqueEmail,
+                        VALID_PASSWORD,
+                        VALID_BIRTHDAY,
+                        VALID_PHONE_NUMBER
+                )
+        );
+    }
+
+    public Member createAdmin() {
+        long uniqueValue = counter.incrementAndGet();
+        String uniqueNickname = String.format("admin%d", uniqueValue);
+        String uniqueEmail = String.format("admin%d@example.com", uniqueValue);
+        return memberRepository.save(
+                new Member(
+                        ADMIN_NAME,
+                        uniqueNickname,
+                        uniqueEmail,
+                        ADMIN_PASSWORD,
+                        ADMIN_PHONE_NUMBER,
+                        MemberRole.ADMIN
+                )
+        );
     }
 
     public String getAccessTokenFromMember(Member member) {
