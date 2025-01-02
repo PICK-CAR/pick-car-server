@@ -47,4 +47,15 @@ public class CarManageService {
         return carModelRepository.findById(carModelId)
                 .orElseThrow(() -> new IllegalArgumentException("차량 모델이 존재하지 않습니다."));
     }
+
+    @Transactional
+    public void deleteCar(Long carId) {
+        Car car = findCarById(carId);
+        carRepository.delete(car);
+    }
+
+    private Car findCarById(Long carId) {
+        return carRepository.findById(carId)
+                .orElseThrow(() -> new IllegalArgumentException("차량이 존재하지 않습니다."));
+    }
 }

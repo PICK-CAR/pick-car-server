@@ -16,4 +16,11 @@ public interface CarManageApiDocs {
             @ApiResponse(responseCode = "400", description = "잘못된 요청")
     })
     ResponseEntity<Void> createCar(CarRequest carRequest);
+
+    @Operation(summary = "공유 차량 삭제", description = "공유 차량을 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "공유 차량 삭제 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    ResponseEntity<Void> deleteCar(Long carId);
 }
