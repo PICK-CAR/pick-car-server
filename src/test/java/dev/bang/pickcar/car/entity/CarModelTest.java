@@ -16,10 +16,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("자동차 모델 테스트")
+@DisplayName("차량 모델 테스트")
 class CarModelTest {
 
-    @DisplayName("정상적인 자동차 모델 생성은 예외가 발생하지 않는다.")
+    @DisplayName("정상적인 차량 모델 생성은 예외가 발생하지 않는다.")
     @Test
     void shouldNotThrowException_WhenValidCreate() {
         assertThatCode(() ->
@@ -35,7 +35,7 @@ class CarModelTest {
         ).doesNotThrowAnyException();
     }
 
-    @DisplayName("자동차 모델 생성 시 브랜드 이름이 null 또는 빈 문자열인 경우 예외가 발생한다.")
+    @DisplayName("차량 모델 생성 시 브랜드 이름이 null 또는 빈 문자열인 경우 예외가 발생한다.")
     @ParameterizedTest
     @NullAndEmptySource
     void shouldThrowException_WhenBrandNameIsNullOrEmpty(String brandName) {
@@ -52,7 +52,7 @@ class CarModelTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("자동차 모델 생성 시 모델 이름이 null 또는 빈 문자열인 경우 예외가 발생한다.")
+    @DisplayName("차량 모델 생성 시 모델 이름이 null 또는 빈 문자열인 경우 예외가 발생한다.")
     @ParameterizedTest
     @NullAndEmptySource
     void shouldThrowException_WhenModelNameIsNullOrEmpty(String modelName) {
@@ -69,7 +69,7 @@ class CarModelTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("자동차 모델 생성 시 세대가 null 또는 빈 문자열인 경우 예외가 발생한다.")
+    @DisplayName("차량 모델 생성 시 세대가 null 또는 빈 문자열인 경우 예외가 발생한다.")
     @ParameterizedTest
     @NullAndEmptySource
     void shouldThrowException_WhenGenerationIsNullOrEmpty(String generation) {
@@ -86,7 +86,7 @@ class CarModelTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("자동차 모델 생성 시 세그먼트가 null인 경우 예외가 발생한다.")
+    @DisplayName("차량 모델 생성 시 세그먼트가 null인 경우 예외가 발생한다.")
     @Test
     void shouldThrowException_WhenSegmentIsNull() {
         assertThatThrownBy(() ->
@@ -102,7 +102,7 @@ class CarModelTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("자동차 모델 생성 시 차량 종류가 null인 경우 예외가 발생한다.")
+    @DisplayName("차량 모델 생성 시 차량 종류가 null인 경우 예외가 발생한다.")
     @Test
     void shouldThrowException_WhenCarTypeIsNull() {
         assertThatThrownBy(() ->
@@ -118,7 +118,7 @@ class CarModelTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("자동차 모델 생성 시 연료 타입이 null인 경우 예외가 발생한다.")
+    @DisplayName("차량 모델 생성 시 연료 타입이 null인 경우 예외가 발생한다.")
     @Test
     void shouldThrowException_WhenFuelTypeIsNull() {
         assertThatThrownBy(() ->
@@ -134,7 +134,7 @@ class CarModelTest {
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("자동차 모델 생성 시 좌석 수가 0 이하인 경우 예외가 발생한다.")
+    @DisplayName("차량 모델 생성 시 좌석 수가 0 이하인 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(ints = {0, -1})
     void shouldThrowException_WhenSeatCapacityIsNotValid(int seatCapacity) {

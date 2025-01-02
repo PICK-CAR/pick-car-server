@@ -1,5 +1,7 @@
 package dev.bang.pickcar.car.entity;
 
+import static dev.bang.pickcar.car.CarConstant.MIN_SEAT_CAPACITY;
+
 import dev.bang.pickcar.entitiy.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,8 +25,6 @@ import org.springframework.util.Assert;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CarModel extends BaseTimeEntity {
-
-    private static final int MIN_SEAT_CAPACITY = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -81,6 +81,6 @@ public class CarModel extends BaseTimeEntity {
         Assert.notNull(segment, "세그먼트를 입력해주세요.");
         Assert.notNull(carType, "차량 종류를 입력해주세요.");
         Assert.notNull(fuelType, "연료 타입을 입력해주세요.");
-        Assert.isTrue(seatCapacity > MIN_SEAT_CAPACITY, String.format("좌석 수는 %d보다 많아야 합니다.", MIN_SEAT_CAPACITY));
+        Assert.isTrue(seatCapacity > MIN_SEAT_CAPACITY, "좌석 수는 " + MIN_SEAT_CAPACITY + "보다 많아야 합니다.");
     }
 }
