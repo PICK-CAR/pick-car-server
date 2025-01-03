@@ -31,7 +31,7 @@ public class CarModelManageController implements CarModelManageApiDocs {
     @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResponseEntity<Void> createCarModel(@RequestBody @Valid CarModelRequest carModelRequest) {
-        Long carModelId = carModelManageService.addCarModel(carModelRequest);
+        long carModelId = carModelManageService.addCarModel(carModelRequest);
         URI resourceUri = URI.create(CAR_MODEL_RESOURCE_LOCATION + carModelId);
         return ResponseEntity.created(resourceUri).build();
     }
