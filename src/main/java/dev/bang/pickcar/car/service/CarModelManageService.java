@@ -17,11 +17,10 @@ public class CarModelManageService {
     private final CarModelRepository carModelRepository;
 
     @Transactional
-    public Long addCarModel(CarModelRequest carModelRequest) {
+    public long addCarModel(CarModelRequest carModelRequest) {
         checkDuplicateCarModel(carModelRequest.brand(), carModelRequest.name(), carModelRequest.generation(), carModelRequest.fuelType());
         CarModel carModel = carModelRequest.toCarModel();
-        return carModelRepository.save(carModel)
-                .getId();
+        return carModelRepository.save(carModel).getId();
     }
 
     private void checkDuplicateCarModel(String brand, String name, String generation, String fuelTypeValue) {
