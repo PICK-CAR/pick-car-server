@@ -5,6 +5,13 @@ on:
     types: [ "opened", "reopened", "synchronize" ]
     branches: [ "develop" ]
 
+permissions:
+  contents: read
+  actions: write
+  issues: write
+  pull-requests: write
+  checks: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
