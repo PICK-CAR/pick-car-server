@@ -1,6 +1,6 @@
 package dev.bang.pickcar.member.dto;
 
-import static dev.bang.pickcar.member.MemberConstant.BIRTHDAY_FORMAT;
+import static dev.bang.pickcar.member.MemberConstant.LOCAL_DATE_FORMAT;
 import static dev.bang.pickcar.member.MemberConstant.EMAIL_REGEX;
 import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_FORMAT;
 import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_REGEX;
@@ -21,7 +21,7 @@ public record MemberRequest(
         String email,
         @NotBlank(message = "비밀번호를 입력해주세요.")
         String password,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = BIRTHDAY_FORMAT, timezone = "Asia/Seoul")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = LOCAL_DATE_FORMAT, timezone = "Asia/Seoul")
         @Past(message = "생일은 현재보다 이전 날짜여야 합니다.")
         LocalDate birthDay,
         @Pattern(regexp = PHONE_NUMBER_REGEX, message = "휴대폰 번호는 " + PHONE_NUMBER_FORMAT + " 형식으로 입력해주세요.")

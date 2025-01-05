@@ -1,5 +1,7 @@
 package dev.bang.pickcar.car.controller;
 
+import static dev.bang.pickcar.car.CarConstant.CAR_MODEL_RESOURCE_LOCATION;
+
 import dev.bang.pickcar.car.controller.docs.CarModelManageApiDocs;
 import dev.bang.pickcar.car.dto.CarModelRequest;
 import dev.bang.pickcar.car.dto.CarModelResponse;
@@ -23,18 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("models")
 public class CarModelManageController implements CarModelManageApiDocs {
 
-    private static final String CAR_MODEL_RESOURCE_LOCATION = "/models/";
-
     private final CarModelManageService carModelManageService;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResponseEntity<Void> createCarModel(@RequestBody @Valid CarModelRequest carModelRequest) {
-        Long carModelId = carModelManageService.addCarModel(carModelRequest);
+        long carModelId = carModelManageService.addCarModel(carModelRequest);
         URI resourceUri = URI.create(CAR_MODEL_RESOURCE_LOCATION + carModelId);
-        return ResponseEntity.created(resourceUri)
-                .build();
+        return ResponseEntity.created(resourceUri).build();
     }
 
     @GetMapping
@@ -56,7 +55,6 @@ public class CarModelManageController implements CarModelManageApiDocs {
     @Override
     public ResponseEntity<Void> deleteCarModel(@PathVariable Long carModelId) {
         carModelManageService.deleteCarModel(carModelId);
-        return ResponseEntity.noContent()
-                .build();
+        return ResponseEntity.noContent().build();
     }
 }

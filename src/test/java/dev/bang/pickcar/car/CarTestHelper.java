@@ -2,6 +2,7 @@ package dev.bang.pickcar.car;
 
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_BRAND_NAME;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_GENERATION;
+import static dev.bang.pickcar.car.CarTestData.VALID_CAR_MODEL;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_MODEL_NAME;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_SEAT_CAPACITY;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_SEGMENT;
@@ -10,8 +11,11 @@ import static dev.bang.pickcar.car.CarTestData.VALID_FUEL_TYPE;
 
 import dev.bang.pickcar.car.dto.CarModelRequest;
 
+import dev.bang.pickcar.car.dto.CarRequest;
+import dev.bang.pickcar.car.entity.Car;
 import dev.bang.pickcar.car.entity.CarModel;
 import dev.bang.pickcar.car.repository.CarModelRepository;
+import dev.bang.pickcar.car.repository.CarRepository;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +27,9 @@ public class CarTestHelper {
 
     @Autowired
     private CarModelRepository carModelRepository;
+
+    @Autowired
+    private CarRepository carRepository;
 
     private final AtomicLong counter = new AtomicLong();
 
@@ -66,5 +73,30 @@ public class CarTestHelper {
 
     public CarModel createCarModel(CarModelRequest carModelRequest) {
         return carModelRepository.save(carModelRequest.toCarModel());
+    }
+
+    public CarRequest createCarRequest(long carModelId) {
+        return new CarRequest(
+                carModelId,
+                CarTestData.VALID_CAR_COLOR,
+                CarTestData.VALID_CAR_VIN,
+                CarTestData.VALID_CAR_NUMBER,
+                CarTestData.VALID_CAR_REGISTRATION_DATE,
+                CarTestData.VALID_CAR_MILEAGE,
+                CarTestData.VALID_CAR_FUEL_LEVEL
+        );
+    }
+
+    public Car createCar(CarRequest carRequest) {
+        return carRepository.save(Car.builder()
+                .model(createCarModel())
+                .color(carRequest.color())
+                .vin(carRequest.vin())
+                .licensePlate(carRequest.licensePlate())
+                .registrationDate(carRequest.registrationDate())
+                .mileage(carRequest.mileage())
+                .fuelLevel(carRequest.fuelLevel())
+                .build()
+        );
     }
 }
