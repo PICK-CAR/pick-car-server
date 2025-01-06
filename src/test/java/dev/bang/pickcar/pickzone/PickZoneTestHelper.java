@@ -26,6 +26,10 @@ public class PickZoneTestHelper {
         );
     }
 
+    public long createPickZone() {
+        return createPickZone(createPickZoneRequest());
+    }
+
     public long createPickZone(PickZoneRequest pickZoneRequest) {
         return pickZoneRepository.save(PickZone.builder()
                 .name(pickZoneRequest.name())
