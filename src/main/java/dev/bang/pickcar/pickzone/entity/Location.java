@@ -1,9 +1,6 @@
 package dev.bang.pickcar.pickzone.entity;
 
-import static dev.bang.pickcar.pickzone.PickZoneConstant.MAX_LATITUDE;
-import static dev.bang.pickcar.pickzone.PickZoneConstant.MAX_LONGITUDE;
-import static dev.bang.pickcar.pickzone.PickZoneConstant.MIN_LATITUDE;
-import static dev.bang.pickcar.pickzone.PickZoneConstant.MIN_LONGITUDE;
+import static dev.bang.pickcar.pickzone.PickZoneConstant.validateCoordinate;
 
 import jakarta.persistence.Embeddable;
 import java.util.Objects;
@@ -16,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class Location {
 
     private double latitude;
-
     private double longitude;
 
     private Location(double latitude, double longitude) {
@@ -25,17 +21,8 @@ public class Location {
     }
 
     public static Location of(double latitude, double longitude) {
-        validate(latitude, longitude);
+        validateCoordinate(latitude, longitude);
         return new Location(latitude, longitude);
-    }
-
-    private static void validate(double latitude, double longitude) {
-        if (latitude < MIN_LATITUDE || latitude > MAX_LATITUDE) {
-            throw new IllegalArgumentException("올바르지 않은 위도입니다: " + latitude);
-        }
-        if (longitude < MIN_LONGITUDE || longitude > MAX_LONGITUDE) {
-            throw new IllegalArgumentException("올바르지 않은 경도입니다: " + longitude);
-        }
     }
 
     @Override
@@ -50,5 +37,13 @@ public class Location {
     @Override
     public int hashCode() {
         return Objects.hash(latitude, longitude);
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
     }
 }

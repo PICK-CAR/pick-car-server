@@ -1,6 +1,7 @@
 package dev.bang.pickcar.car.controller.docs;
 
 import dev.bang.pickcar.car.dto.CarRequest;
+import dev.bang.pickcar.car.dto.PickZoneAssignRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -16,6 +17,13 @@ public interface CarManageApiDocs {
             @ApiResponse(responseCode = "400", description = "잘못된 요청")
     })
     ResponseEntity<Void> createCar(CarRequest carRequest);
+
+    @Operation(summary = "공유 차량 PickZone에 배치", description = "공유 차량을 PickZone에 배치합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "공유 차량 PickZone 배치 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    ResponseEntity<Void> assignCarToPickZone(Long carId, PickZoneAssignRequest pickZoneAssignRequest);
 
     @Operation(summary = "공유 차량 삭제", description = "공유 차량을 삭제합니다.")
     @ApiResponses(value = {
