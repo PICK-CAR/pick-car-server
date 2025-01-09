@@ -106,5 +106,6 @@ public class Car extends BaseTimeEntity {
         Assert.notNull(pickZone, "픽존을 입력해주세요.");
         Assert.isTrue(pickZone.isDeleted() == Boolean.FALSE, "삭제된 픽존은 차량에 할당할 수 없습니다.");
         this.pickZone = pickZone;
+        this.pickZone.getCars().add(this);
     }
 }
