@@ -5,8 +5,6 @@ import static dev.bang.pickcar.pickzone.PickZoneConstant.MIN_PICK_ZONE_SEARCH_SI
 
 public record PickZoneSearchCondition(
         String keyword,
-        Double latitude,
-        Double longitude,
         Integer page,
         Integer size
 ) {

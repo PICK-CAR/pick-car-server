@@ -5,6 +5,7 @@ import static dev.bang.pickcar.car.CarConstant.MIN_CAR_MILEAGE;
 import static dev.bang.pickcar.car.CarConstant.VIN_LENGTH;
 
 import dev.bang.pickcar.entitiy.BaseTimeEntity;
+import dev.bang.pickcar.pickzone.entity.PickZone;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -59,6 +60,10 @@ public class Car extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private CarStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pick_zone_id")
+    private PickZone pickZone;
+
     private boolean isDeleted = Boolean.FALSE;
 
     @Builder
@@ -95,5 +100,12 @@ public class Car extends BaseTimeEntity {
         Assert.notNull(registrationDate, "등록일을 입력해주세요.");
         Assert.isTrue(mileage >= MIN_CAR_MILEAGE, "주행거리는 " + MIN_CAR_MILEAGE + " 이상이어야 합니다.");
         Assert.isTrue(fuelLevel >= MIN_CAR_FUEL_LEVEL, "연료량은 " + MIN_CAR_FUEL_LEVEL + " 이상이어야 합니다.");
+    }
+
+    public void assignPickZone(PickZone pickZone) {
+        Assert.notNull(pickZone, "픽존을 입력해주세요.");
+        Assert.isTrue(pickZone.isDeleted() == Boolean.FALSE, "삭제된 픽존은 차량에 할당할 수 없습니다.");
+        this.pickZone = pickZone;
+        this.pickZone.getCars().add(this);
     }
 }
