@@ -3,6 +3,7 @@ package dev.bang.pickcar.car.controller;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 import dev.bang.pickcar.car.CarTestHelper;
+import dev.bang.pickcar.car.dto.CarHourlyRateRequest;
 import dev.bang.pickcar.car.dto.CarRequest;
 import dev.bang.pickcar.car.dto.PickZoneAssignRequest;
 import dev.bang.pickcar.car.entity.Car;
@@ -182,6 +183,90 @@ class CarManageControllerTest {
                 .contentType(ContentType.JSON)
                 .body(pickZoneAssignRequest)
                 .when().post("cars/" + car.getId() + "/pick-zones")
+                .then().log().all()
+                .statusCode(400);
+    }
+
+    @DisplayName("관리자인 경우 차량의 시간당 요금을 수정할 수 있다.")
+    @Test
+    void updateHourlyRate() {
+        Member admin = memberTestHelper.createAdmin();
+        String accessToken = memberTestHelper.getAccessTokenFromMember(admin);
+
+        CarModel carModel = carTestHelper.createCarModel();
+        CarRequest carRequest = carTestHelper.createCarRequest(carModel.getId());
+        Car car = carTestHelper.createCar(carRequest);
+
+        int newHourlyRate = 30_000;
+        CarHourlyRateRequest updateHourlyRateRequest = new CarHourlyRateRequest(newHourlyRate);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(updateHourlyRateRequest)
+                .when().post("cars/" + car.getId() + "/hourly-rate")
+                .then().log().all()
+                .statusCode(200);
+    }
+
+    @DisplayName("관리자가 아닌 경우 차량의 시간당 요금을 수정할 수 없다.")
+    @Test
+    void updateHourlyRate_Unauthorized() {
+        Member member = memberTestHelper.createMember();
+        String accessToken = memberTestHelper.getAccessTokenFromMember(member);
+
+        CarModel carModel = carTestHelper.createCarModel();
+        CarRequest carRequest = carTestHelper.createCarRequest(carModel.getId());
+        Car car = carTestHelper.createCar(carRequest);
+
+        int newHourlyRate = 30_000;
+        CarHourlyRateRequest updateHourlyRateRequest = new CarHourlyRateRequest(newHourlyRate);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(updateHourlyRateRequest)
+                .when().post("cars/" + car.getId() + "/hourly-rate")
+                .then().log().all()
+                .statusCode(403);
+    }
+
+    @DisplayName("존재하지 않는 차량의 시간당 요금을 수정할 수 없다.")
+    @Test
+    void updateHourlyRate_NotFound() {
+        Member admin = memberTestHelper.createAdmin();
+        String accessToken = memberTestHelper.getAccessTokenFromMember(admin);
+
+        long notExistCarId = 999L;
+        int newHourlyRate = 30_000;
+        CarHourlyRateRequest updateHourlyRateRequest = new CarHourlyRateRequest(newHourlyRate);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(updateHourlyRateRequest)
+                .when().post("cars/" + notExistCarId + "/hourly-rate")
+                .then().log().all()
+                .statusCode(400);
+    }
+
+    @DisplayName("수정할 기본 요금이 null인 경우 차량의 시간당 요금을 수정할 수 없다.")
+    @Test
+    void updateHourlyRate_Null() {
+        Member admin = memberTestHelper.createAdmin();
+        String accessToken = memberTestHelper.getAccessTokenFromMember(admin);
+
+        CarModel carModel = carTestHelper.createCarModel();
+        CarRequest carRequest = carTestHelper.createCarRequest(carModel.getId());
+        Car car = carTestHelper.createCar(carRequest);
+
+        CarHourlyRateRequest updateHourlyRateRequest = new CarHourlyRateRequest(null);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(updateHourlyRateRequest)
+                .when().post("cars/" + car.getId() + "/hourly-rate")
                 .then().log().all()
                 .statusCode(400);
     }

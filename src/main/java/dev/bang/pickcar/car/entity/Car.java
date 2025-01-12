@@ -1,6 +1,7 @@
 package dev.bang.pickcar.car.entity;
 
 import static dev.bang.pickcar.car.CarConstant.MIN_CAR_FUEL_LEVEL;
+import static dev.bang.pickcar.car.CarConstant.MIN_CAR_HOUR_RATE;
 import static dev.bang.pickcar.car.CarConstant.MIN_CAR_MILEAGE;
 import static dev.bang.pickcar.car.CarConstant.VIN_LENGTH;
 
@@ -17,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -117,5 +119,10 @@ public class Car extends BaseTimeEntity {
         Assert.isTrue(pickZone.isDeleted() == Boolean.FALSE, "삭제된 픽존은 차량에 할당할 수 없습니다.");
         this.pickZone = pickZone;
         this.pickZone.getCars().add(this);
+    }
+
+    public void updateHourlyRate(int hourlyRate) {
+        Assert.isTrue(hourlyRate > MIN_CAR_HOUR_RATE, "시간당 요금은 " + MIN_CAR_HOUR_RATE + "보다 커야 합니다.");
+        this.hourlyRate = hourlyRate;
     }
 }

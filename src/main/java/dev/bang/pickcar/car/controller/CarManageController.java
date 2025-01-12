@@ -3,6 +3,7 @@ package dev.bang.pickcar.car.controller;
 import static dev.bang.pickcar.car.CarConstant.CAR_RESOURCE_LOCATION;
 
 import dev.bang.pickcar.car.controller.docs.CarManageApiDocs;
+import dev.bang.pickcar.car.dto.CarHourlyRateRequest;
 import dev.bang.pickcar.car.dto.CarRequest;
 import dev.bang.pickcar.car.dto.PickZoneAssignRequest;
 import dev.bang.pickcar.car.service.CarManageService;
@@ -40,6 +41,15 @@ public class CarManageController implements CarManageApiDocs {
     public ResponseEntity<Void> assignCarToPickZone(@PathVariable("carId") Long carId,
                                                     @RequestBody PickZoneAssignRequest pickZoneAssignRequest) {
         carManageService.assignCarToPickZone(carId, pickZoneAssignRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("{carId}/hourly-rate")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Override
+    public ResponseEntity<Void> updateHourlyRate(@PathVariable("carId") Long carId,
+                                                 @RequestBody @Valid CarHourlyRateRequest hourlyRateRequest) {
+        carManageService.updateHourlyRate(carId, hourlyRateRequest);
         return ResponseEntity.ok().build();
     }
 
