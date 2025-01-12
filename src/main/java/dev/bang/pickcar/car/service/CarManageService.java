@@ -43,6 +43,7 @@ public class CarManageService {
                 .registrationDate(carRequest.registrationDate())
                 .mileage(carRequest.mileage())
                 .fuelLevel(carRequest.fuelLevel())
+                .hourlyRate(carRequest.hourlyRate())
                 .build();
     }
 

@@ -64,6 +64,8 @@ public class Car extends BaseTimeEntity {
     @JoinColumn(name = "pick_zone_id")
     private PickZone pickZone;
 
+    private int hourlyRate;
+
     private boolean isDeleted = Boolean.FALSE;
 
     @Builder
@@ -73,7 +75,8 @@ public class Car extends BaseTimeEntity {
                String licensePlate,
                LocalDate registrationDate,
                int mileage,
-               float fuelLevel) {
+               float fuelLevel,
+               Integer hourlyRate) {
         validate(model, color, vin, licensePlate, registrationDate, mileage, fuelLevel);
         this.model = model;
         this.color = color;
@@ -82,6 +85,7 @@ public class Car extends BaseTimeEntity {
         this.registrationDate = registrationDate;
         this.mileage = mileage;
         this.fuelLevel = fuelLevel;
+        this.hourlyRate = getHourlyRate(hourlyRate, model.getDefaultHourlyRate());
         this.status = CarStatus.AVAILABLE;
     }
 
@@ -100,6 +104,12 @@ public class Car extends BaseTimeEntity {
         Assert.notNull(registrationDate, "등록일을 입력해주세요.");
         Assert.isTrue(mileage >= MIN_CAR_MILEAGE, "주행거리는 " + MIN_CAR_MILEAGE + " 이상이어야 합니다.");
         Assert.isTrue(fuelLevel >= MIN_CAR_FUEL_LEVEL, "연료량은 " + MIN_CAR_FUEL_LEVEL + " 이상이어야 합니다.");
+    }
+
+    private int getHourlyRate(Integer hourlyRate, int defaultHourlyRate) {
+        return hourlyRate == null
+                ? defaultHourlyRate
+                : hourlyRate;
     }
 
     public void assignPickZone(PickZone pickZone) {

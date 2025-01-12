@@ -2,11 +2,13 @@ package dev.bang.pickcar.car.entity;
 
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_COLOR;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_FUEL_LEVEL;
+import static dev.bang.pickcar.car.CarTestData.VALID_CAR_HOUR_RATE;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_MILEAGE;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_MODEL;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_NUMBER;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_REGISTRATION_DATE;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_VIN;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -30,6 +32,7 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).doesNotThrowAnyException();
     }
@@ -45,6 +48,7 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -61,6 +65,7 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -77,6 +82,7 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -93,6 +99,7 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -109,6 +116,7 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -124,6 +132,7 @@ class CarTest {
                 .registrationDate(null)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -140,6 +149,7 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(mileage)
                 .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -156,7 +166,25 @@ class CarTest {
                 .registrationDate(VALID_CAR_REGISTRATION_DATE)
                 .mileage(VALID_CAR_MILEAGE)
                 .fuelLevel(fuelLevel)
+                .hourlyRate(VALID_CAR_HOUR_RATE)
                 .build()
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("공유 차량 생성 시 시간당 요금을 지정하지 않은 경우 차량 모델의 기본 시간당 요금이 설정된다.")
+    @Test
+    void shouldSetDefaultHourRate_WhenHourRateIsNull() {
+        Car car = Car.builder()
+                .model(VALID_CAR_MODEL)
+                .color(VALID_CAR_COLOR)
+                .vin(VALID_CAR_VIN)
+                .licensePlate(VALID_CAR_NUMBER)
+                .registrationDate(VALID_CAR_REGISTRATION_DATE)
+                .mileage(VALID_CAR_MILEAGE)
+                .fuelLevel(VALID_CAR_FUEL_LEVEL)
+                .hourlyRate(null)
+                .build();
+
+        assertThat(car.getHourlyRate()).isEqualTo(VALID_CAR_MODEL.getDefaultHourlyRate());
     }
 }

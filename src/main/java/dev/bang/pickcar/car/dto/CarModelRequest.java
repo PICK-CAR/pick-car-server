@@ -5,6 +5,7 @@ import dev.bang.pickcar.car.entity.CarType;
 import dev.bang.pickcar.car.entity.FuelType;
 import dev.bang.pickcar.car.entity.Segment;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record CarModelRequest(
         @NotBlank(message = "브랜드를 입력해주세요.")
@@ -19,7 +20,10 @@ public record CarModelRequest(
         String carType,
         @NotBlank(message = "연료 타입을 입력해주세요. e.g. GASOLINE, DIESEL")
         String fuelType,
-        int seatCapacity
+        @NotNull(message = "좌석 수를 입력해주세요.")
+        Integer seatCapacity,
+        @NotNull(message = "기본 시간당 요금을 입력해주세요.")
+        Integer defaultHourlyRate
 ) {
     public CarModel toCarModel() {
         return new CarModel(
@@ -29,7 +33,8 @@ public record CarModelRequest(
                 Segment.from(segment),
                 CarType.from(carType),
                 FuelType.from(fuelType),
-                seatCapacity
+                seatCapacity,
+                defaultHourlyRate
         );
     }
 }
