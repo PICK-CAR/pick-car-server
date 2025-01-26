@@ -126,6 +126,96 @@ class ReservationControllerTest {
                 .statusCode(400);
     }
 
+    @DisplayName("회원은 이미 예약된 시간대라도 취소된 차량은 예약할 수 있다.")
+    @Test
+    void createReservationWithCanceledCar() {
+        Member member = memberTestHelper.createMember();
+        String accessToken = memberTestHelper.getAccessTokenFromMember(member);
+
+        Car batchedCar = reservationTestHelper.createBatchedCar();
+        RequestReservation requestReservation = reservationTestHelper.createRequestReservation(batchedCar.getId());
+
+        // 예약 생성 후 취소
+        Reservation reservation = reservationTestHelper.createReservation(member, batchedCar);
+        callCancelReservationApi(reservation, accessToken);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(requestReservation)
+                .when().post("reservations")
+                .then().log().all()
+                .statusCode(201);
+    }
+
+    private void callCancelReservationApi(Reservation reservation, String accessToken) {
+        RequestPaymentConfirm requestPaymentConfirm = new RequestPaymentConfirm(
+                ORDER_ID,
+                reservation.calculateTotalPrice(),
+                PAYMENT_KEY
+        );
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(requestPaymentConfirm)
+                .when().post("reservations/" + reservation.getId() + "/payment")
+                .then().log().all()
+                .statusCode(200);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(new RequestPaymentCancel("단순 변심"))
+                .when().post("reservations/" + reservation.getId() + "/cancel")
+                .then().log().all()
+                .statusCode(200);
+    }
+
+    @DisplayName("회원은 이미 예약된 시간대라도 반납된 차량은 예약할 수 있다.")
+    @Test
+    void createReservationWithReturnedCar() {
+        Member member = memberTestHelper.createMember();
+        String accessToken = memberTestHelper.getAccessTokenFromMember(member);
+
+        Car batchedCar = reservationTestHelper.createBatchedCar();
+        RequestReservation requestReservation = reservationTestHelper.createRequestReservation(batchedCar.getId());
+
+        // 예약 생성 후 반납
+        Reservation reservation = reservationTestHelper.createReservation(member, batchedCar);
+        callReturnReservationApi(reservation, accessToken);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(requestReservation)
+                .when().post("reservations")
+                .then().log().all()
+                .statusCode(201);
+    }
+
+    private void callReturnReservationApi(Reservation reservation, String accessToken) {
+        RequestPaymentConfirm requestPaymentConfirm = new RequestPaymentConfirm(
+                ORDER_ID,
+                reservation.calculateTotalPrice(),
+                PAYMENT_KEY
+        );
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(requestPaymentConfirm)
+                .when().post("reservations/" + reservation.getId() + "/payment")
+                .then().log().all()
+                .statusCode(200);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .when().post("reservations/" + reservation.getId() + "/return")
+                .then().log().all()
+                .statusCode(200);
+    }
+
     @DisplayName("회원은 본인의 예약을 결제할 수 있다.")
     @Test
     void payReservation() {
@@ -300,6 +390,22 @@ class ReservationControllerTest {
 
         RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + anotherMemberAccessToken)
+                .when().post("reservations/" + reservation.getId() + "/return")
+                .then().log().all()
+                .statusCode(400);
+    }
+
+    @DisplayName("확정되지 않은 예약은 반납할 수 없다.")
+    @Test
+    void completeReturnWithUnconfirmedReservation() {
+        Member member = memberTestHelper.createMember();
+        String accessToken = memberTestHelper.getAccessTokenFromMember(member);
+
+        Car batchedCar = reservationTestHelper.createBatchedCar();
+        Reservation reservation = reservationTestHelper.createReservation(member, batchedCar);
+
+        RestAssured.given().log().all()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .when().post("reservations/" + reservation.getId() + "/return")
                 .then().log().all()
                 .statusCode(400);

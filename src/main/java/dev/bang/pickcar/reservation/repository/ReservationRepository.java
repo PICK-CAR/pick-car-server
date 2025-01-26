@@ -17,6 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             FROM Reservation r
             WHERE r.car = :car
             AND r.isDeleted = false
+            AND (r.status <> 'CANCELLED' AND r.status <> 'COMPLETED')
             AND (
                     (:start < r.endDateTime AND :end >= r.startDateTime)
                     OR (:end > r.startDateTime AND :end <= r.endDateTime)
