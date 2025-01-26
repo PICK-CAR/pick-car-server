@@ -15,6 +15,7 @@ public record CarResponse(
         String color,
         String licensePlate,
         float fuelLevel,
+        int hourlyRate,
         String status
 ) {
     public static CarResponse of(Car car) {
@@ -30,6 +31,7 @@ public record CarResponse(
                 car.getColor(),
                 car.getLicensePlate(),
                 car.getFuelLevel(),
+                car.getHourlyRate(),
                 car.getStatus().name()
         );
     }

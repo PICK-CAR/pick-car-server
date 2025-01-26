@@ -1,6 +1,7 @@
 package dev.bang.pickcar.car.entity;
 
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_BRAND_NAME;
+import static dev.bang.pickcar.car.CarTestData.VALID_CAR_DEFAULT_HOUR_RATE;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_GENERATION;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_MODEL_NAME;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_SEAT_CAPACITY;
@@ -30,7 +31,8 @@ class CarModelTest {
                         VALID_CAR_SEGMENT,
                         VALID_CAR_TYPE,
                         VALID_FUEL_TYPE,
-                        VALID_CAR_SEAT_CAPACITY
+                        VALID_CAR_SEAT_CAPACITY,
+                        VALID_CAR_DEFAULT_HOUR_RATE
                 )
         ).doesNotThrowAnyException();
     }
@@ -47,7 +49,8 @@ class CarModelTest {
                         VALID_CAR_SEGMENT,
                         VALID_CAR_TYPE,
                         VALID_FUEL_TYPE,
-                        VALID_CAR_SEAT_CAPACITY
+                        VALID_CAR_SEAT_CAPACITY,
+                        VALID_CAR_DEFAULT_HOUR_RATE
                 )
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -64,7 +67,8 @@ class CarModelTest {
                         VALID_CAR_SEGMENT,
                         VALID_CAR_TYPE,
                         VALID_FUEL_TYPE,
-                        VALID_CAR_SEAT_CAPACITY
+                        VALID_CAR_SEAT_CAPACITY,
+                        VALID_CAR_DEFAULT_HOUR_RATE
                 )
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -81,7 +85,8 @@ class CarModelTest {
                         VALID_CAR_SEGMENT,
                         VALID_CAR_TYPE,
                         VALID_FUEL_TYPE,
-                        VALID_CAR_SEAT_CAPACITY
+                        VALID_CAR_SEAT_CAPACITY,
+                        VALID_CAR_DEFAULT_HOUR_RATE
                 )
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -97,7 +102,8 @@ class CarModelTest {
                         null,
                         VALID_CAR_TYPE,
                         VALID_FUEL_TYPE,
-                        VALID_CAR_SEAT_CAPACITY
+                        VALID_CAR_SEAT_CAPACITY,
+                        VALID_CAR_DEFAULT_HOUR_RATE
                 )
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -113,7 +119,8 @@ class CarModelTest {
                         VALID_CAR_SEGMENT,
                         null,
                         VALID_FUEL_TYPE,
-                        VALID_CAR_SEAT_CAPACITY
+                        VALID_CAR_SEAT_CAPACITY,
+                        VALID_CAR_DEFAULT_HOUR_RATE
                 )
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -129,7 +136,8 @@ class CarModelTest {
                         VALID_CAR_SEGMENT,
                         VALID_CAR_TYPE,
                         null,
-                        VALID_CAR_SEAT_CAPACITY
+                        VALID_CAR_SEAT_CAPACITY,
+                        VALID_CAR_DEFAULT_HOUR_RATE
                 )
         ).isInstanceOf(IllegalArgumentException.class);
     }
@@ -146,7 +154,26 @@ class CarModelTest {
                         VALID_CAR_SEGMENT,
                         VALID_CAR_TYPE,
                         VALID_FUEL_TYPE,
-                        seatCapacity
+                        seatCapacity,
+                        VALID_CAR_DEFAULT_HOUR_RATE
+                )
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("차량 모델 생성 시 시간당 요금이 0 이하인 경우 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {0, -1})
+    void shouldUseDefaultHourlyRate_WhenHourlyRateIsNotValid(int hourlyRate) {
+        assertThatThrownBy(() ->
+                new CarModel(
+                        VALID_CAR_BRAND_NAME,
+                        VALID_CAR_MODEL_NAME,
+                        VALID_CAR_GENERATION,
+                        VALID_CAR_SEGMENT,
+                        VALID_CAR_TYPE,
+                        VALID_FUEL_TYPE,
+                        VALID_CAR_SEAT_CAPACITY,
+                        hourlyRate
                 )
         ).isInstanceOf(IllegalArgumentException.class);
     }

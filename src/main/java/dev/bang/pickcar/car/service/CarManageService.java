@@ -1,5 +1,6 @@
 package dev.bang.pickcar.car.service;
 
+import dev.bang.pickcar.car.dto.CarHourlyRateRequest;
 import dev.bang.pickcar.car.dto.CarRequest;
 import dev.bang.pickcar.car.dto.PickZoneAssignRequest;
 import dev.bang.pickcar.car.entity.Car;
@@ -43,6 +44,7 @@ public class CarManageService {
                 .registrationDate(carRequest.registrationDate())
                 .mileage(carRequest.mileage())
                 .fuelLevel(carRequest.fuelLevel())
+                .hourlyRate(carRequest.hourlyRate())
                 .build();
     }
 
@@ -72,5 +74,11 @@ public class CarManageService {
     private PickZone findPickZoneById(long pickZoneId) {
         return pickZoneRepository.findById(pickZoneId)
                 .orElseThrow(() -> new IllegalArgumentException("픽존이 존재하지 않습니다."));
+    }
+
+    @Transactional
+    public void updateHourlyRate(Long carId, CarHourlyRateRequest hourlyRateRequest) {
+        Car car = findCarById(carId);
+        car.updateHourlyRate(hourlyRateRequest.hourlyRate());
     }
 }
