@@ -18,6 +18,7 @@ import dev.bang.pickcar.car.entity.Car;
 import dev.bang.pickcar.car.entity.CarModel;
 import dev.bang.pickcar.car.repository.CarModelRepository;
 import dev.bang.pickcar.car.repository.CarRepository;
+import jakarta.validation.constraints.NotBlank;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -84,13 +85,25 @@ public class CarTestHelper {
         return new CarRequest(
                 carModelId,
                 VALID_CAR_COLOR,
-                VALID_CAR_VIN,
-                VALID_CAR_NUMBER,
+                createUniqueVin(),
+                createUniqueLicensePlate(),
                 VALID_CAR_REGISTRATION_DATE,
                 VALID_CAR_MILEAGE,
                 VALID_CAR_FUEL_LEVEL,
                 VALID_CAR_HOUR_RATE
         );
+    }
+
+    private String createUniqueVin() {
+        // 숫자 17개
+        long number = counter.incrementAndGet();
+        return String.format("%017d", number);
+    }
+
+    private String createUniqueLicensePlate() {
+        // 숫자 3개 + "하" + 숫자 4개
+        long number = counter.incrementAndGet();
+        return String.format("%03d하%04d", number % 1000, number % 10000);
     }
 
     public Car createCar(CarRequest carRequest) {

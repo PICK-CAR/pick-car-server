@@ -68,7 +68,7 @@ class PickZoneQueryControllerTest {
         String accessToken = memberTestHelper.getAccessTokenFromMember(admin);
 
         PickZoneRequest pickZoneRequest = pickZoneTestHelper.createPickZoneRequest();
-        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest);
+        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest).getId();
 
         RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)

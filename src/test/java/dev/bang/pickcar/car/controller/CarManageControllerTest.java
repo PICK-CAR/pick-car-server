@@ -112,7 +112,7 @@ class CarManageControllerTest {
         CarRequest carRequest = carTestHelper.createCarRequest(carModel.getId());
         Car car = carTestHelper.createCar(carRequest);
 
-        long pickZoneId = pickZoneTestHelper.createPickZone();
+        long pickZoneId = pickZoneTestHelper.createPickZone().getId();
         PickZoneAssignRequest pickZoneAssignRequest = new PickZoneAssignRequest(pickZoneId);
 
         RestAssured.given().log().all()
@@ -134,7 +134,7 @@ class CarManageControllerTest {
         CarRequest carRequest = carTestHelper.createCarRequest(carModel.getId());
         Car car = carTestHelper.createCar(carRequest);
 
-        long pickZoneId = pickZoneTestHelper.createPickZone();
+        long pickZoneId = pickZoneTestHelper.createPickZone().getId();
         PickZoneAssignRequest pickZoneAssignRequest = new PickZoneAssignRequest(pickZoneId);
 
         RestAssured.given().log().all()
@@ -153,7 +153,7 @@ class CarManageControllerTest {
         String accessToken = memberTestHelper.getAccessTokenFromMember(admin);
 
         long notExistCarId = 999L;
-        long pickZoneId = pickZoneTestHelper.createPickZone();
+        long pickZoneId = pickZoneTestHelper.createPickZone().getId();
         PickZoneAssignRequest pickZoneAssignRequest = new PickZoneAssignRequest(pickZoneId);
 
         RestAssured.given().log().all()

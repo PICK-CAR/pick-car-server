@@ -10,7 +10,6 @@ import static dev.bang.pickcar.car.CarTestData.VALID_CAR_TYPE;
 import static dev.bang.pickcar.car.CarTestData.VALID_FUEL_TYPE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
