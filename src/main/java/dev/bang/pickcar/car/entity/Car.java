@@ -18,7 +18,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -88,7 +87,7 @@ public class Car extends BaseTimeEntity {
         this.mileage = mileage;
         this.fuelLevel = fuelLevel;
         this.hourlyRate = getHourlyRate(hourlyRate, model.getDefaultHourlyRate());
-        this.status = CarStatus.AVAILABLE;
+        this.status = CarStatus.UNBATCHED;
     }
 
     private void validate(CarModel model,
@@ -119,10 +118,34 @@ public class Car extends BaseTimeEntity {
         Assert.isTrue(pickZone.isDeleted() == Boolean.FALSE, "삭제된 픽존은 차량에 할당할 수 없습니다.");
         this.pickZone = pickZone;
         this.pickZone.getCars().add(this);
+        this.status = CarStatus.AVAILABLE;
     }
 
     public void updateHourlyRate(int hourlyRate) {
         Assert.isTrue(hourlyRate > MIN_CAR_HOUR_RATE, "시간당 요금은 " + MIN_CAR_HOUR_RATE + "보다 커야 합니다.");
         this.hourlyRate = hourlyRate;
+    }
+
+    public boolean isAvailable() {
+        return status == CarStatus.AVAILABLE;
+    }
+
+    public void maintenance() {
+        status = CarStatus.UNDER_MAINTENANCE;
+    }
+
+    public void completeMaintenance() {
+        if (status != CarStatus.UNDER_MAINTENANCE) {
+            throw new IllegalArgumentException("정비 중인 차량만 정비 완료할 수 있습니다.");
+        }
+        status = CarStatus.AVAILABLE;
+    }
+
+    public void unavailable() {
+        status = CarStatus.UNAVAILABLE;
+    }
+
+    public void available() {
+        status = CarStatus.AVAILABLE;
     }
 }

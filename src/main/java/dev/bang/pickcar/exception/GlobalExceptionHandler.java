@@ -1,5 +1,6 @@
 package dev.bang.pickcar.exception;
 
+import dev.bang.pickcar.payment.external.PaymentException;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,12 @@ public class GlobalExceptionHandler {
                         .stream()
                         .map(FieldError::getDefaultMessage)
                         .collect(Collectors.joining("\n")));
+    }
+
+    @ExceptionHandler(PaymentException.class)
+    public ResponseEntity<String> handlePaymentException(PaymentException exception) {
+        log.warn("PaymentException: {}", exception.getMessage());
+        return ResponseEntity.badRequest()
+                .body(exception.getMessage());
     }
 }
