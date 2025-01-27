@@ -5,9 +5,8 @@ import lombok.Getter;
 @Getter
 public enum CarStatus {
 
-    AVAILABLE("예약 가능"),
-    RESERVED("예약 중"),
-    IN_USE("사용 중"),
+    UNBATCHED("배치되지 않음"),
+    AVAILABLE("사용 가능"),
     UNDER_MAINTENANCE("정비 중"),
     UNAVAILABLE("대여 불가"),
     ;

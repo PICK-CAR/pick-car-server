@@ -80,7 +80,7 @@ class PickZoneManageControllerTest {
         String accessToken = memberTestHelper.getAccessTokenFromMember(admin);
 
         PickZoneRequest pickZoneRequest = pickZoneTestHelper.createPickZoneRequest();
-        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest);
+        long pickZoneId = pickZoneTestHelper.createPickZone().getId();
 
         PickZoneRequest updatePickZoneRequest = new PickZoneRequest(
                 "수정된 픽존 이름",
@@ -107,7 +107,7 @@ class PickZoneManageControllerTest {
         String accessToken = memberTestHelper.getAccessTokenFromMember(member);
 
         PickZoneRequest pickZoneRequest = pickZoneTestHelper.createPickZoneRequest();
-        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest);
+        long pickZoneId = pickZoneTestHelper.createPickZone().getId();
 
         PickZoneRequest updatePickZoneRequest = pickZoneTestHelper.createPickZoneRequest();
 
@@ -127,7 +127,7 @@ class PickZoneManageControllerTest {
         String accessToken = memberTestHelper.getAccessTokenFromMember(admin);
 
         PickZoneRequest pickZoneRequest = pickZoneTestHelper.createPickZoneRequest();
-        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest);
+        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest).getId();
 
         RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
@@ -143,7 +143,7 @@ class PickZoneManageControllerTest {
         String accessToken = memberTestHelper.getAccessTokenFromMember(member);
 
         PickZoneRequest pickZoneRequest = pickZoneTestHelper.createPickZoneRequest();
-        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest);
+        long pickZoneId = pickZoneTestHelper.createPickZone(pickZoneRequest).getId();
 
         RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)

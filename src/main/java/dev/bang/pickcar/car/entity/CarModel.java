@@ -1,5 +1,6 @@
 package dev.bang.pickcar.car.entity;
 
+import static dev.bang.pickcar.car.CarConstant.MIN_CAR_HOUR_RATE;
 import static dev.bang.pickcar.car.CarConstant.MIN_SEAT_CAPACITY;
 
 import dev.bang.pickcar.entitiy.BaseTimeEntity;
@@ -48,6 +49,8 @@ public class CarModel extends BaseTimeEntity {
 
     private int seatCapacity;
 
+    private int defaultHourlyRate;
+
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = Boolean.FALSE;
 
@@ -57,8 +60,9 @@ public class CarModel extends BaseTimeEntity {
                     Segment segment,
                     CarType carType,
                     FuelType fuelType,
-                    int seatCapacity) {
-        validate(brand, name, generation, segment, carType, fuelType, seatCapacity);
+                    int seatCapacity,
+                    int defaultHourlyRate) {
+        validate(brand, name, generation, segment, carType, fuelType, seatCapacity, defaultHourlyRate);
         this.brand = brand;
         this.name = name;
         this.generation = generation;
@@ -66,6 +70,7 @@ public class CarModel extends BaseTimeEntity {
         this.carType = carType;
         this.fuelType = fuelType;
         this.seatCapacity = seatCapacity;
+        this.defaultHourlyRate = defaultHourlyRate;
     }
 
     private void validate(String brand,
@@ -74,7 +79,8 @@ public class CarModel extends BaseTimeEntity {
                           Segment segment,
                           CarType carType,
                           FuelType fuelType,
-                          int seatCapacity) {
+                          int seatCapacity,
+                          int defaultHourlyRate) {
         Assert.hasText(brand, "브랜드를 입력해주세요.");
         Assert.hasText(name, "모델명을 입력해주세요.");
         Assert.hasText(generation, "세대를 입력해주세요.");
@@ -82,5 +88,6 @@ public class CarModel extends BaseTimeEntity {
         Assert.notNull(carType, "차량 종류를 입력해주세요.");
         Assert.notNull(fuelType, "연료 타입을 입력해주세요.");
         Assert.isTrue(seatCapacity > MIN_SEAT_CAPACITY, "좌석 수는 " + MIN_SEAT_CAPACITY + "보다 많아야 합니다.");
+        Assert.isTrue(defaultHourlyRate > MIN_CAR_HOUR_RATE, "시간당 요금은 " + MIN_CAR_HOUR_RATE + "보다 커야 합니다.");
     }
 }

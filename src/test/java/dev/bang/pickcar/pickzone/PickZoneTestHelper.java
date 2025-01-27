@@ -31,18 +31,18 @@ public class PickZoneTestHelper {
         );
     }
 
-    public long createPickZone() {
+    public PickZone createPickZone() {
         return createPickZone(createPickZoneRequest());
     }
 
-    public long createPickZone(PickZoneRequest pickZoneRequest) {
+    public PickZone createPickZone(PickZoneRequest pickZoneRequest) {
         return pickZoneRepository.save(PickZone.builder()
                 .name(pickZoneRequest.name())
                 .address(pickZoneRequest.address())
                 .detailAddress(pickZoneRequest.detailAddress())
                 .description(pickZoneRequest.description())
                 .location(Location.of(pickZoneRequest.latitude(), pickZoneRequest.longitude()))
-                .build()).getId();
+                .build());
     }
 
     public MapBounds createMapBounds() {

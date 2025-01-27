@@ -22,3 +22,9 @@ mail:
   imap-port: ${MAIL_IMAP_PORT}
   account: ${MAIL_ACCOUNT}
   password: ${MAIL_PASSWORD}
+
+payment:
+  secret-key: ${PAYMENT_SECRET_KEY}
+  base-url: ${PAYMENT_BASE_URL}
+  confirm-endpoint: ${PAYMENT_CONFIRM_ENDPOINT}
+  cancel-endpoint: ${PAYMENT_CANCEL_ENDPOINT}

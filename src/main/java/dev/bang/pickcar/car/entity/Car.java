@@ -1,6 +1,7 @@
 package dev.bang.pickcar.car.entity;
 
 import static dev.bang.pickcar.car.CarConstant.MIN_CAR_FUEL_LEVEL;
+import static dev.bang.pickcar.car.CarConstant.MIN_CAR_HOUR_RATE;
 import static dev.bang.pickcar.car.CarConstant.MIN_CAR_MILEAGE;
 import static dev.bang.pickcar.car.CarConstant.VIN_LENGTH;
 
@@ -64,6 +65,8 @@ public class Car extends BaseTimeEntity {
     @JoinColumn(name = "pick_zone_id")
     private PickZone pickZone;
 
+    private int hourlyRate;
+
     private boolean isDeleted = Boolean.FALSE;
 
     @Builder
@@ -73,7 +76,8 @@ public class Car extends BaseTimeEntity {
                String licensePlate,
                LocalDate registrationDate,
                int mileage,
-               float fuelLevel) {
+               float fuelLevel,
+               Integer hourlyRate) {
         validate(model, color, vin, licensePlate, registrationDate, mileage, fuelLevel);
         this.model = model;
         this.color = color;
@@ -82,7 +86,8 @@ public class Car extends BaseTimeEntity {
         this.registrationDate = registrationDate;
         this.mileage = mileage;
         this.fuelLevel = fuelLevel;
-        this.status = CarStatus.AVAILABLE;
+        this.hourlyRate = getHourlyRate(hourlyRate, model.getDefaultHourlyRate());
+        this.status = CarStatus.UNBATCHED;
     }
 
     private void validate(CarModel model,
@@ -102,10 +107,45 @@ public class Car extends BaseTimeEntity {
         Assert.isTrue(fuelLevel >= MIN_CAR_FUEL_LEVEL, "연료량은 " + MIN_CAR_FUEL_LEVEL + " 이상이어야 합니다.");
     }
 
+    private int getHourlyRate(Integer hourlyRate, int defaultHourlyRate) {
+        return hourlyRate == null
+                ? defaultHourlyRate
+                : hourlyRate;
+    }
+
     public void assignPickZone(PickZone pickZone) {
         Assert.notNull(pickZone, "픽존을 입력해주세요.");
         Assert.isTrue(pickZone.isDeleted() == Boolean.FALSE, "삭제된 픽존은 차량에 할당할 수 없습니다.");
         this.pickZone = pickZone;
         this.pickZone.getCars().add(this);
+        this.status = CarStatus.AVAILABLE;
+    }
+
+    public void updateHourlyRate(int hourlyRate) {
+        Assert.isTrue(hourlyRate > MIN_CAR_HOUR_RATE, "시간당 요금은 " + MIN_CAR_HOUR_RATE + "보다 커야 합니다.");
+        this.hourlyRate = hourlyRate;
+    }
+
+    public boolean isAvailable() {
+        return status == CarStatus.AVAILABLE;
+    }
+
+    public void maintenance() {
+        status = CarStatus.UNDER_MAINTENANCE;
+    }
+
+    public void completeMaintenance() {
+        if (status != CarStatus.UNDER_MAINTENANCE) {
+            throw new IllegalArgumentException("정비 중인 차량만 정비 완료할 수 있습니다.");
+        }
+        status = CarStatus.AVAILABLE;
+    }
+
+    public void unavailable() {
+        status = CarStatus.UNAVAILABLE;
+    }
+
+    public void available() {
+        status = CarStatus.AVAILABLE;
     }
 }
