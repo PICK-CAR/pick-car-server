@@ -103,4 +103,8 @@ public class Payment {
         this.requestedAt = requestedAt;
         this.approvedAt = approvedAt;
     }
+
+    public boolean isCancelable() {
+        return status == PaymentStatus.DONE;
+    }
 }

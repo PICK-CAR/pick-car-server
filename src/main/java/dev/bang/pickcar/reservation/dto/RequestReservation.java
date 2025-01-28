@@ -10,8 +10,8 @@ public record RequestReservation(
         @NotNull(message = "차량 ID를 입력해주세요.")
         Long carId,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = LOCAL_DATE_TIME_FORMAT, timezone = "Asia/Seoul")
-        LocalDateTime startDate,
+        LocalDateTime start,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = LOCAL_DATE_TIME_FORMAT, timezone = "Asia/Seoul")
-        LocalDateTime endDate
+        LocalDateTime end
 ) {
 }

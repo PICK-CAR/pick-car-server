@@ -54,19 +54,6 @@ public class Reservation extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    /**
-     * PENDING: 예약 요청이 만들어졌지만 아직 확정되지 않은 상태.
-     * CONFIRMED: 예약이 승인된 상태.
-     * CANCELLED: 사용자가 예약을 취소한 상태.
-     * COMPLETED: 예약이 완료된 상태 (차량 반납 완료).
-     */
-    enum ReservationStatus {
-        PENDING,
-        CONFIRMED,
-        CANCELLED,
-        COMPLETED,
-    }
-
     private boolean isDeleted = Boolean.FALSE;
 
     @Builder
@@ -130,6 +117,18 @@ public class Reservation extends BaseTimeEntity {
             throw new IllegalArgumentException("확정된 예약만 반납 완료할 수 있습니다.");
         }
         status = ReservationStatus.COMPLETED;
+    }
+
+    public void validateStatusForCancellation() {
+        if (isPending()) {
+            throw new IllegalArgumentException("확정되지 않은 예약은 취소할 수 없습니다.");
+        }
+        if (isCancelled()) {
+            throw new IllegalArgumentException("이미 취소된 예약입니다.");
+        }
+        if (isCompleted()) {
+            throw new IllegalArgumentException("이미 완료된 예약입니다.");
+        }
     }
 
     public int calculateTotalPrice() {
