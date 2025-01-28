@@ -4,6 +4,7 @@ import dev.bang.pickcar.car.dto.CarModelRequest;
 import dev.bang.pickcar.car.dto.CarModelResponse;
 import dev.bang.pickcar.car.entity.CarModel;
 import dev.bang.pickcar.car.entity.FuelType;
+import dev.bang.pickcar.car.repository.CarModelQueryRepository;
 import dev.bang.pickcar.car.repository.CarModelRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CarModelManageService {
 
     private final CarModelRepository carModelRepository;
+    private final CarModelQueryRepository carModelQueryRepository;
 
     @Transactional
     public long addCarModel(CarModelRequest carModelRequest) {
@@ -25,7 +27,7 @@ public class CarModelManageService {
 
     private void checkDuplicateCarModel(String brand, String name, String generation, String fuelTypeValue) {
         FuelType fuelType = FuelType.from(fuelTypeValue);
-        if (carModelRepository.existsSameCarModel(brand, name, generation, fuelType)) {
+        if (carModelQueryRepository.existsSameCarModel(brand, name, generation, fuelType)) {
             throw new IllegalArgumentException("이미 존재하는 차량 모델입니다.");
         }
     }
