@@ -8,7 +8,6 @@ import static dev.bang.pickcar.car.CarTestData.VALID_CAR_MODEL_NAME;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_SEAT_CAPACITY;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_SEGMENT;
 import static dev.bang.pickcar.car.CarTestData.VALID_CAR_TYPE;
-import static dev.bang.pickcar.car.CarTestData.VALID_CAR_VIN;
 import static dev.bang.pickcar.car.CarTestData.VALID_FUEL_TYPE;
 
 import dev.bang.pickcar.car.dto.CarModelRequest;
@@ -18,7 +17,6 @@ import dev.bang.pickcar.car.entity.Car;
 import dev.bang.pickcar.car.entity.CarModel;
 import dev.bang.pickcar.car.repository.CarModelRepository;
 import dev.bang.pickcar.car.repository.CarRepository;
-import jakarta.validation.constraints.NotBlank;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
