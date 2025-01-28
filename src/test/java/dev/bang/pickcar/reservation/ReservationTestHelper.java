@@ -1,7 +1,6 @@
 package dev.bang.pickcar.reservation;
 
 import static dev.bang.pickcar.reservation.ReservationTestData.VALID_END_DATE;
-import static dev.bang.pickcar.reservation.ReservationTestData.VALID_MEMBER;
 import static dev.bang.pickcar.reservation.ReservationTestData.VALID_START_DATE;
 
 import dev.bang.pickcar.car.CarTestHelper;
@@ -10,7 +9,6 @@ import dev.bang.pickcar.car.entity.Car;
 import dev.bang.pickcar.car.entity.CarModel;
 import dev.bang.pickcar.member.MemberTestHelper;
 import dev.bang.pickcar.member.entity.Member;
-import dev.bang.pickcar.member.repository.MemberRepository;
 import dev.bang.pickcar.pickzone.PickZoneTestHelper;
 import dev.bang.pickcar.reservation.dto.RequestReservation;
 import dev.bang.pickcar.reservation.entity.Reservation;
