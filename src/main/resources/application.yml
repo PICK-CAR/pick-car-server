@@ -7,6 +7,20 @@ spring:
       ddl-auto: none
     open-in-view: false
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_ACCOUNT}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          debug: true
+          auth: true
+          connection timeout: 5000
+          starttls:
+              enable: true
+
 security:
   whitelist: ${SECURITY_WHITELIST}
   jwt:

@@ -1,6 +1,5 @@
 package dev.bang.pickcar.member.dto;
 
-import dev.bang.pickcar.member.entity.Member;
 import java.time.LocalDate;
 
 public record MemberResponse(
@@ -11,14 +10,4 @@ public record MemberResponse(
         String phoneNumber,
         LocalDate birthDay
 ) {
-    public static MemberResponse from(Member member) {
-        return new MemberResponse(
-                member.getId(),
-                member.getEmail(),
-                member.getName(),
-                member.getNickname(),
-                member.getPhoneNumber(),
-                member.getBirthDay()
-        );
-    }
 }

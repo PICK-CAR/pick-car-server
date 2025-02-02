@@ -1,5 +1,6 @@
 package dev.bang.pickcar.auth.repository;
 
+import static dev.bang.pickcar.member.MemberTestData.VALID_EMAIL;
 import static dev.bang.pickcar.member.MemberTestData.VALID_PHONE_NUMBER;
 import static dev.bang.pickcar.member.MemberTestData.VERIFICATION_CODE;
 
@@ -16,11 +17,11 @@ import org.springframework.stereotype.Repository;
 public class TestVerificationCodeRepository implements VerificationCodeRepository {
 
     @Override
-    public void save(String phoneNumber, String verificationCode) {
+    public void save(String identifier, String verificationCode) {
     }
 
     @Override
-    public String findByPhoneNumber(String phoneNumber) {
+    public String findByIdentifier(String identifier) {
         return VERIFICATION_CODE;
     }
 
@@ -29,7 +30,8 @@ public class TestVerificationCodeRepository implements VerificationCodeRepositor
     }
 
     @Override
-    public boolean existsByVerifiedPhoneNumber(String phoneNumber) {
-        return VALID_PHONE_NUMBER.equals(phoneNumber);
+    public boolean existsByVerifiedIdentifier(String identifier) {
+        return VALID_PHONE_NUMBER.equals(identifier)
+                || VALID_EMAIL.equals(identifier);
     }
 }
