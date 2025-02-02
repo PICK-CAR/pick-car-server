@@ -9,7 +9,9 @@ import static dev.bang.pickcar.member.MemberTestData.VALID_NAME;
 import static dev.bang.pickcar.member.MemberTestData.VALID_NICKNAME;
 import static dev.bang.pickcar.member.MemberTestData.VALID_PASSWORD;
 import static dev.bang.pickcar.member.MemberTestData.VALID_PHONE_NUMBER;
+import static dev.bang.pickcar.member.MemberTestData.VERIFICATION_CODE;
 
+import dev.bang.pickcar.auth.dto.EmailVerifyRequest;
 import dev.bang.pickcar.auth.dto.LoginRequest;
 import dev.bang.pickcar.auth.dto.MemberAuthResponse;
 import dev.bang.pickcar.auth.jwt.TokenProvider;
@@ -22,6 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @ActiveProfiles("test")
@@ -64,6 +67,7 @@ public class MemberTestHelper {
         );
     }
 
+    @Transactional
     public Member createMember() {
         long uniqueValue = counter.incrementAndGet();
         String uniqueNickname = String.format("tester%d", uniqueValue);
@@ -80,6 +84,7 @@ public class MemberTestHelper {
         );
     }
 
+    @Transactional
     public Member createAdmin() {
         long uniqueValue = counter.incrementAndGet();
         String uniqueNickname = String.format("admin%d", uniqueValue);
@@ -100,5 +105,9 @@ public class MemberTestHelper {
         MemberAuthResponse authResponse = new MemberAuthResponse(member.getId(), member.getRole().name());
         return tokenProvider.generateToken(authResponse)
                 .accessToken();
+    }
+
+    public EmailVerifyRequest createEmailVerifyRequest() {
+        return new EmailVerifyRequest(VALID_EMAIL, VERIFICATION_CODE);
     }
 }

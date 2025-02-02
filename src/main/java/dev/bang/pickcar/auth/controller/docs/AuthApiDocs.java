@@ -1,5 +1,6 @@
 package dev.bang.pickcar.auth.controller.docs;
 
+import dev.bang.pickcar.auth.dto.EmailVerifyRequest;
 import dev.bang.pickcar.auth.dto.LoginRequest;
 import dev.bang.pickcar.auth.dto.TokenResponse;
 import dev.bang.pickcar.member.dto.MemberRequest;
@@ -25,6 +26,27 @@ public interface AuthApiDocs {
             @ApiResponse(responseCode = "400", description = "잘못된 요청")
     })
     ResponseEntity<TokenResponse> login(LoginRequest loginRequest);
+
+    @Operation(summary = "이메일 중복 확인", description = "이메일 중복을 확인합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "이메일 중복 확인 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    ResponseEntity<Boolean> checkEmailDuplication(String email);
+
+    @Operation(summary = "(이메일) 인증번호 전송", description = "이메일 인증을 위한 인증번호를 전송합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증번호 전송 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    ResponseEntity<Void> sendVerificationCodeToEmail(String email);
+
+    @Operation(summary = "(이메일) 인증번호 확인", description = "이메일 인증을 위한 인증번호를 확인합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증번호 확인 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    ResponseEntity<Void> verifyEmail(EmailVerifyRequest emailVerifyRequest);
 
     @Operation(summary = "인증번호 발급", description = "휴대폰 번호 인증을 위한 인증번호를 발급합니다.")
     @ApiResponses(value = {

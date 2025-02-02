@@ -1,8 +1,7 @@
-package dev.bang.pickcar.auth.util;
+package dev.bang.pickcar.auth.util.mail;
 
 import static dev.bang.pickcar.member.MemberTestData.VERIFICATION_CODE;
 
-import dev.bang.pickcar.auth.util.mail.MailReader;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

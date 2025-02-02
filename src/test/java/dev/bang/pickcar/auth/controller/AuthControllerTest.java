@@ -11,8 +11,10 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 import dev.bang.pickcar.auth.dto.LoginRequest;
 import dev.bang.pickcar.member.MemberTestHelper;
 import dev.bang.pickcar.member.dto.MemberRequest;
+import dev.bang.pickcar.member.entity.Member;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -180,5 +182,51 @@ class AuthControllerTest {
                 .when().post("auth/login")
                 .then().log().all()
                 .statusCode(400);
+    }
+
+    @DisplayName("중복되는 이메일이 존재하는지 확인한다.")
+    @Test
+    void checkEmailDuplication() {
+        // 1. 이메일이 존재하지 않는 경우 → false 반환
+        Boolean result = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().post("auth/check/email/{email}", VALID_EMAIL)
+                .then().log().all()
+                .statusCode(200)
+                .extract().as(Boolean.class);
+        Assertions.assertFalse(result);
+
+        // 2. 회원을 생성하고 해당 회원의 이메일로 중복 확인
+        Member member = memberTestHelper.createMember();
+
+        // 3. 이메일이 존재하는 경우 → true 반환
+        result = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().post("auth/check/email/{email}", member.getEmail())
+                .then().log().all()
+                .statusCode(200)
+                .extract().as(Boolean.class);
+        Assertions.assertTrue(result);
+    }
+
+    @DisplayName("이메일로 인증번호를 전송한다.")
+    @Test
+    void sendVerificationCodeToEmail() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .when().post("auth/verification/send/email/{email}", VALID_EMAIL)
+                .then().log().all()
+                .statusCode(200);
+    }
+
+    @DisplayName("이메일로 인증번호를 확인한다.")
+    @Test
+    void verifyEmail() {
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(memberTestHelper.createEmailVerifyRequest())
+                .when().post("auth/verification/verify/email")
+                .then().log().all()
+                .statusCode(200);
     }
 }

@@ -1,4 +1,4 @@
-package dev.bang.pickcar.auth.util;
+package dev.bang.pickcar.auth.util.mail;
 
 public interface MailReader {
 
