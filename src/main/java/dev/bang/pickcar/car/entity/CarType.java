@@ -20,7 +20,7 @@ public enum CarType {
         this.description = description;
     }
 
-    public static CarType from(String carType) {
+    public static CarType fromString(String carType) {
         try {
             return CarType.valueOf(carType.toUpperCase());
         } catch (IllegalArgumentException e) {

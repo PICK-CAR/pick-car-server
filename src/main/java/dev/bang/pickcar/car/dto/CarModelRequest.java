@@ -30,9 +30,9 @@ public record CarModelRequest(
                 brand,
                 name,
                 generation,
-                Segment.from(segment),
-                CarType.from(carType),
-                FuelType.from(fuelType),
+                Segment.fromString(segment),
+                CarType.fromString(carType),
+                FuelType.fromString(fuelType),
                 seatCapacity,
                 defaultHourlyRate
         );

@@ -26,7 +26,7 @@ public class CarModelManageService {
     }
 
     private void checkDuplicateCarModel(String brand, String name, String generation, String fuelTypeValue) {
-        FuelType fuelType = FuelType.from(fuelTypeValue);
+        FuelType fuelType = FuelType.fromString(fuelTypeValue);
         if (carModelQueryRepository.existsSameCarModel(brand, name, generation, fuelType)) {
             throw new IllegalArgumentException("이미 존재하는 차량 모델입니다.");
         }
