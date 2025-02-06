@@ -22,6 +22,7 @@ public class AuthFacade {
 
     public String signup(MemberRequest memberRequest) {
         verificationService.checkVerifiedPhoneNumber(memberRequest.phoneNumber());
+        verificationService.checkVerifiedEmail(memberRequest.email());
         String encryptedPassword = authService.encryptPassword(memberRequest.password());
         Long memberId = memberService.create(memberRequest, encryptedPassword);
         return MEMBER_RESOURCE_LOCATION + memberId;
@@ -32,8 +33,20 @@ public class AuthFacade {
         return authService.issueToken(authResponse);
     }
 
-    public String issueVerificationCode(String phoneNumber) {
-        return verificationService.generateVerificationCode(phoneNumber);
+    public boolean checkEmailDuplication(String email) {
+        return memberService.existsByEmail(email);
+    }
+
+    public void sendVerificationCodeToEmail(String email) {
+        verificationService.sendVerificationCodeToEmail(email);
+    }
+
+    public boolean verifyEmail(String email, String verificationCode) {
+        return verificationService.verifyEmail(email, verificationCode);
+    }
+
+    public String issueVerificationCode(String identifier) {
+        return verificationService.generateVerificationCode(identifier);
     }
 
     public void verifyPhoneNumber(String phoneNumber) {

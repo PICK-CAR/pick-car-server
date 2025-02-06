@@ -7,6 +7,20 @@ spring:
       ddl-auto: none
     open-in-view: false
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_ACCOUNT}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          debug: true
+          auth: true
+          connection timeout: 5000
+          starttls:
+              enable: true
+
 security:
   whitelist: ${SECURITY_WHITELIST}
   jwt:
@@ -22,3 +36,9 @@ mail:
   imap-port: ${MAIL_IMAP_PORT}
   account: ${MAIL_ACCOUNT}
   password: ${MAIL_PASSWORD}
+
+payment:
+  secret-key: ${PAYMENT_SECRET_KEY}
+  base-url: ${PAYMENT_BASE_URL}
+  confirm-endpoint: ${PAYMENT_CONFIRM_ENDPOINT}
+  cancel-endpoint: ${PAYMENT_CANCEL_ENDPOINT}
