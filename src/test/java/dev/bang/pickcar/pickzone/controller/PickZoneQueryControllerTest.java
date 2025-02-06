@@ -58,7 +58,7 @@ class PickZoneQueryControllerTest {
                 .when().post("pick-zones/nearby")
                 .then().log().all()
                 .statusCode(200)
-                .body("size()", equalTo(1));
+                .body("data.size()", equalTo(1));
     }
 
     @DisplayName("id로 픽존을 조회할 수 있다.")
