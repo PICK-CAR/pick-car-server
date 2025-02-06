@@ -3,6 +3,7 @@ package dev.bang.pickcar.auth.controller.facade;
 import dev.bang.pickcar.auth.dto.LoginRequest;
 import dev.bang.pickcar.auth.dto.MemberAuthResponse;
 import dev.bang.pickcar.auth.dto.TokenResponse;
+import dev.bang.pickcar.auth.dto.VerificationCodeResponse;
 import dev.bang.pickcar.auth.service.AuthService;
 import dev.bang.pickcar.auth.service.VerificationService;
 import dev.bang.pickcar.member.dto.MemberRequest;
@@ -41,12 +42,12 @@ public class AuthFacade {
         verificationService.sendVerificationCodeToEmail(email);
     }
 
-    public boolean verifyEmail(String email, String verificationCode) {
-        return verificationService.verifyEmail(email, verificationCode);
+    public void verifyEmail(String email, String verificationCode) {
+        verificationService.verifyEmail(email, verificationCode);
     }
 
-    public String issueVerificationCode(String identifier) {
-        return verificationService.generateVerificationCode(identifier);
+    public VerificationCodeResponse issueVerificationCode(String identifier) {
+        return new VerificationCodeResponse(verificationService.generateVerificationCode(identifier));
     }
 
     public void verifyPhoneNumber(String phoneNumber) {

@@ -2,20 +2,20 @@ package dev.bang.pickcar.auth.controller;
 
 import dev.bang.pickcar.auth.controller.docs.AuthApiDocs;
 import dev.bang.pickcar.auth.controller.facade.AuthFacade;
+import dev.bang.pickcar.auth.dto.EmailRequest;
 import dev.bang.pickcar.auth.dto.EmailVerifyRequest;
 import dev.bang.pickcar.auth.dto.LoginRequest;
+import dev.bang.pickcar.auth.dto.PhoneNumberRequest;
 import dev.bang.pickcar.auth.dto.TokenResponse;
+import dev.bang.pickcar.auth.dto.VerificationCodeResponse;
 import dev.bang.pickcar.member.dto.MemberRequest;
 import jakarta.validation.Valid;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,37 +39,37 @@ public class AuthController implements AuthApiDocs {
         return ResponseEntity.ok(token);
     }
 
-    @PostMapping("check/email/{email}")
+    @PostMapping("check/email")
     @Override
-    public ResponseEntity<Boolean> checkEmailDuplication(@PathVariable(name = "email") String email) {
-        return ResponseEntity.ok(authFacade.checkEmailDuplication(email));
+    public ResponseEntity<Boolean> checkEmailDuplication(@RequestBody @Valid EmailRequest req) {
+        return ResponseEntity.ok(authFacade.checkEmailDuplication(req.email()));
     }
 
-    @PostMapping("verification/send/email/{email}")
+    @PostMapping("verification/email/send")
     @Override
-    public ResponseEntity<Void> sendVerificationCodeToEmail(@PathVariable(name = "email") String email) {
-        authFacade.sendVerificationCodeToEmail(email);
+    public ResponseEntity<Void> sendVerificationCodeToEmail(@RequestBody @Valid EmailRequest req) {
+        authFacade.sendVerificationCodeToEmail(req.email());
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("verification/verify/email")
+    @PostMapping("verification/email/verify")
     @Override
     public ResponseEntity<Void> verifyEmail(@RequestBody @Valid EmailVerifyRequest emailVerifyRequest) {
-        boolean isVerified = authFacade.verifyEmail(emailVerifyRequest.email(), emailVerifyRequest.verificationCode());
-        return isVerified ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        authFacade.verifyEmail(emailVerifyRequest.email(), emailVerifyRequest.verificationCode());
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("verification/issue")
+    @PostMapping("verification/phone/code")
     @Override
-    public ResponseEntity<String> issueVerificationCode(@RequestParam String phoneNumber) {
-        String verificationCode = authFacade.issueVerificationCode(phoneNumber);
+    public ResponseEntity<VerificationCodeResponse> issueVerificationCode(@RequestBody @Valid PhoneNumberRequest req) {
+        VerificationCodeResponse verificationCode = authFacade.issueVerificationCode(req.phoneNumber());
         return ResponseEntity.ok(verificationCode);
     }
 
-    @PostMapping("verification/verify")
+    @PostMapping("verification/phone/verify")
     @Override
-    public ResponseEntity<Void> verifyVerificationNumber(@RequestParam String phoneNumber) {
-        authFacade.verifyPhoneNumber(phoneNumber);
+    public ResponseEntity<Void> verifyVerificationNumber(@RequestBody @Valid PhoneNumberRequest req) {
+        authFacade.verifyPhoneNumber(req.phoneNumber());
         return ResponseEntity.ok().build();
     }
 }

@@ -53,14 +53,13 @@ public class VerificationService {
         );
     }
 
-    public boolean verifyEmail(String email, String verificationCode) {
+    public void verifyEmail(String email, String verificationCode) {
         String savedVerificationCode = verificationCodeRepository.findByIdentifier(email);
         boolean isVerified = savedVerificationCode.equals(verificationCode);
         if (!isVerified) {
             throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
         }
         verificationCodeRepository.completeVerification(email);
-        return true;
     }
 
     public void checkVerifiedEmail(String email) {

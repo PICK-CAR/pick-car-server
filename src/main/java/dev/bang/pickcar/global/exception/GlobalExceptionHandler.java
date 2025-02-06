@@ -14,27 +14,31 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException exception) {
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException exception) {
         log.warn("IllegalArgumentException: {}", exception.getMessage());
         return ResponseEntity.badRequest()
-                .body(exception.getMessage());
+                .body(ErrorResponse.badRequest(exception.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
         log.warn("MethodArgumentNotValidException: {}", exception.getMessage());
         return ResponseEntity.badRequest()
-                .body(exception.getBindingResult()
-                        .getFieldErrors()
-                        .stream()
-                        .map(FieldError::getDefaultMessage)
-                        .collect(Collectors.joining("\n")));
+                .body(ErrorResponse.badRequest(collectErrorFields(exception)));
+    }
+
+    private String collectErrorFields(MethodArgumentNotValidException exception) {
+        return exception.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining("\n"));
     }
 
     @ExceptionHandler(PaymentException.class)
-    public ResponseEntity<String> handlePaymentException(PaymentException exception) {
+    public ResponseEntity<ErrorResponse> handlePayment(PaymentException exception) {
         log.warn("PaymentException: {}", exception.getMessage());
         return ResponseEntity.badRequest()
-                .body(exception.getMessage());
+                .body(ErrorResponse.badRequest(exception.getMessage()));
     }
 }
