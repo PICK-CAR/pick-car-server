@@ -16,14 +16,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @RestControllerAdvice
 public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
 
+    private static final String APPLICATION_PACKAGE = "dev.bang.pickcar";
+
     @Override
     public boolean supports(@NonNull MethodParameter returnType,
                             @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
-        return !isHandlingException(returnType);
+        return !isHandlingException(returnType)
+                && isClassInTargetPackage(returnType);
     }
 
     private boolean isHandlingException(MethodParameter returnType) {
-        return returnType.getContainingClass().equals(GlobalExceptionHandler.class);
+        return returnType.getContainingClass()
+                .equals(GlobalExceptionHandler.class);
+    }
+
+    private boolean isClassInTargetPackage(MethodParameter returnType) {
+        return returnType.getContainingClass()
+                .getName()
+                .startsWith(APPLICATION_PACKAGE);
     }
 
     @Override
