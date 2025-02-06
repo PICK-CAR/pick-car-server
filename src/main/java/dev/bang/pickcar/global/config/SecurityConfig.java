@@ -2,6 +2,8 @@ package dev.bang.pickcar.global.config;
 
 import dev.bang.pickcar.auth.jwt.JwtFilter;
 import dev.bang.pickcar.global.config.properties.SecurityProperties;
+import dev.bang.pickcar.global.exception.GlobalAccessDeniedHandler;
+import dev.bang.pickcar.global.exception.GlobalAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,6 +31,8 @@ public class SecurityConfig {
 
     private final SecurityProperties securityProperties;
     private final JwtFilter jwtFilter;
+    private final GlobalAccessDeniedHandler globalAccessDeniedHandler;
+    private final GlobalAuthenticationEntryPoint globalAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,6 +49,7 @@ public class SecurityConfig {
                                 .requestMatchers(getWhitelistedMatchers()).permitAll()
                                 .anyRequest().authenticated()
                 )
+                .exceptionHandling(this::configureExceptionHandling)
                 .build();
     }
 
@@ -65,5 +71,10 @@ public class SecurityConfig {
 
     private void configureSessionManagement(SessionManagementConfigurer<HttpSecurity> session) {
         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    void configureExceptionHandling(ExceptionHandlingConfigurer<HttpSecurity> config) {
+        config.accessDeniedHandler(globalAccessDeniedHandler)
+                .authenticationEntryPoint(globalAuthenticationEntryPoint);
     }
 }
