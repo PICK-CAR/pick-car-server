@@ -1,7 +1,7 @@
 package dev.bang.pickcar.reservation.entity;
 
 import dev.bang.pickcar.car.entity.Car;
-import dev.bang.pickcar.entitiy.BaseTimeEntity;
+import dev.bang.pickcar.global.entitiy.BaseTimeEntity;
 import dev.bang.pickcar.member.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

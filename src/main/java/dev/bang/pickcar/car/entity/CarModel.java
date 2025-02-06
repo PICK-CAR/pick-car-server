@@ -3,7 +3,7 @@ package dev.bang.pickcar.car.entity;
 import static dev.bang.pickcar.car.CarConstant.MIN_CAR_HOUR_RATE;
 import static dev.bang.pickcar.car.CarConstant.MIN_SEAT_CAPACITY;
 
-import dev.bang.pickcar.entitiy.BaseTimeEntity;
+import dev.bang.pickcar.global.entitiy.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

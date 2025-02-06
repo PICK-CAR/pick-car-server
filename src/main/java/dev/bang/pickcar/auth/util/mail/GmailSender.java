@@ -1,6 +1,6 @@
 package dev.bang.pickcar.auth.util.mail;
 
-import dev.bang.pickcar.config.properties.MailProperties;
+import dev.bang.pickcar.global.config.properties.MailProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

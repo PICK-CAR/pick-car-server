@@ -5,7 +5,7 @@ import static dev.bang.pickcar.member.MemberConstant.MAX_NICKNAME_LENGTH;
 import static dev.bang.pickcar.member.MemberConstant.MIN_NICKNAME_LENGTH;
 import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_REGEX;
 
-import dev.bang.pickcar.entitiy.BaseTimeEntity;
+import dev.bang.pickcar.global.entitiy.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

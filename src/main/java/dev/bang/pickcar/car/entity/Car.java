@@ -5,7 +5,7 @@ import static dev.bang.pickcar.car.CarConstant.MIN_CAR_HOUR_RATE;
 import static dev.bang.pickcar.car.CarConstant.MIN_CAR_MILEAGE;
 import static dev.bang.pickcar.car.CarConstant.VIN_LENGTH;
 
-import dev.bang.pickcar.entitiy.BaseTimeEntity;
+import dev.bang.pickcar.global.entitiy.BaseTimeEntity;
 import dev.bang.pickcar.pickzone.entity.PickZone;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

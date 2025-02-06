@@ -1,6 +1,6 @@
-package dev.bang.pickcar.config;
+package dev.bang.pickcar.global.config;
 
-import dev.bang.pickcar.config.properties.SwaggerProperties;
+import dev.bang.pickcar.global.config.properties.SwaggerProperties;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
