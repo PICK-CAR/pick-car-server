@@ -1,6 +1,6 @@
-package dev.bang.pickcar.config;
+package dev.bang.pickcar.global.config;
 
-import dev.bang.pickcar.config.properties.SpringMailProperties;
+import dev.bang.pickcar.global.config.properties.SpringMailProperties;
 import java.util.Properties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

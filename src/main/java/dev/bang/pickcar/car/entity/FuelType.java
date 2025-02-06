@@ -19,7 +19,7 @@ public enum FuelType {
         this.description = description;
     }
 
-    public static FuelType from(String fuelType) {
+    public static FuelType fromString(String fuelType) {
         try {
             return FuelType.valueOf(fuelType.toUpperCase());
         } catch (IllegalArgumentException e) {

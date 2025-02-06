@@ -1,4 +1,4 @@
-package dev.bang.pickcar.config;
+package dev.bang.pickcar.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

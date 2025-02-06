@@ -1,4 +1,4 @@
-package dev.bang.pickcar.exception;
+package dev.bang.pickcar.global.exception;
 
 import dev.bang.pickcar.payment.external.PaymentException;
 import java.util.stream.Collectors;

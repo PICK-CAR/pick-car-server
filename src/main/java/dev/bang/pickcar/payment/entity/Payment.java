@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -106,5 +107,36 @@ public class Payment {
 
     public boolean isCancelable() {
         return status == PaymentStatus.DONE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Payment payment = (Payment) o;
+        return Objects.equals(paymentKey, payment.paymentKey)
+                && Objects.equals(orderId, payment.orderId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentKey, orderId);
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", paymentKey='" + paymentKey + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", totalAmount=" + totalAmount +
+                ", orderName='" + orderName + '\'' +
+                ", reservation=" + reservation +
+                ", requestedAt=" + requestedAt +
+                ", approvedAt=" + approvedAt +
+                ", status=" + status +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }

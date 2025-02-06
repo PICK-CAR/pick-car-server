@@ -1,6 +1,6 @@
 package dev.bang.pickcar.auth.util.mail;
 
-import dev.bang.pickcar.config.properties.MailProperties;
+import dev.bang.pickcar.global.config.properties.MailProperties;
 import jakarta.annotation.PostConstruct;
 import jakarta.mail.*;
 import jakarta.mail.search.*;

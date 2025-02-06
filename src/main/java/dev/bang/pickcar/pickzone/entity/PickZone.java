@@ -1,7 +1,7 @@
 package dev.bang.pickcar.pickzone.entity;
 
 import dev.bang.pickcar.car.entity.Car;
-import dev.bang.pickcar.entitiy.BaseTimeEntity;
+import dev.bang.pickcar.global.entitiy.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -88,5 +89,35 @@ public class PickZone extends BaseTimeEntity {
         if (!currentValue.equals(newValue)) {
             updateAction.run();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PickZone pickZone = (PickZone) o;
+        return Objects.equals(name, pickZone.name)
+                && Objects.equals(address, pickZone.address)
+                && Objects.equals(location, pickZone.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, address, location);
+    }
+
+    @Override
+    public String toString() {
+        return "PickZone{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", detailAddress='" + detailAddress + '\'' +
+                ", description='" + description + '\'' +
+                ", location=" + location +
+                ", cars=" + cars +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }

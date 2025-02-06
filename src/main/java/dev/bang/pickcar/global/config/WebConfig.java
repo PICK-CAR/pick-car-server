@@ -1,4 +1,4 @@
-package dev.bang.pickcar.config;
+package dev.bang.pickcar.global.config;
 
 import dev.bang.pickcar.auth.util.LoginMemberArgumentResolver;
 import java.util.List;

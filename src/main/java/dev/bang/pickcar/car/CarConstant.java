@@ -10,4 +10,7 @@ public class CarConstant {
 
     public static final String CAR_MODEL_RESOURCE_LOCATION = "/models/";
     public static final int MIN_SEAT_CAPACITY = 0;
+
+    private CarConstant() {
+    }
 }

@@ -21,7 +21,7 @@ public enum Segment {
         this.code = code;
     }
 
-    public static Segment from(String code) {
+    public static Segment fromString(String code) {
         try {
             return Segment.valueOf(code.toUpperCase());
         } catch (IllegalArgumentException e) {

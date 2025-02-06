@@ -1,4 +1,4 @@
-package dev.bang.pickcar.entitiy;
+package dev.bang.pickcar.global.entitiy;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

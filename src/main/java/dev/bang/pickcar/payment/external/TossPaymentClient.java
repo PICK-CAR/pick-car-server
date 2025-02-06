@@ -1,7 +1,7 @@
 package dev.bang.pickcar.payment.external;
 
 import com.google.gson.Gson;
-import dev.bang.pickcar.config.properties.PaymentProperties;
+import dev.bang.pickcar.global.config.properties.PaymentProperties;
 import dev.bang.pickcar.payment.dto.RequestPaymentCancel;
 import dev.bang.pickcar.payment.dto.RequestPaymentConfirm;
 import dev.bang.pickcar.payment.dto.ResponsePaymentCancel;

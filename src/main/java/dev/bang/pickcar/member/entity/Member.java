@@ -5,7 +5,7 @@ import static dev.bang.pickcar.member.MemberConstant.MAX_NICKNAME_LENGTH;
 import static dev.bang.pickcar.member.MemberConstant.MIN_NICKNAME_LENGTH;
 import static dev.bang.pickcar.member.MemberConstant.PHONE_NUMBER_REGEX;
 
-import dev.bang.pickcar.entitiy.BaseTimeEntity;
+import dev.bang.pickcar.global.entitiy.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -97,5 +98,35 @@ public class Member extends BaseTimeEntity {
         if (!phoneNumber.matches(PHONE_NUMBER_REGEX)) {
             throw new IllegalArgumentException("휴대폰 번호 형식이 올바르지 않습니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Member member = (Member) o;
+        return Objects.equals(name, member.name)
+                && Objects.equals(email, member.email)
+                && Objects.equals(password, member.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email, password);
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthDay=" + birthDay +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
