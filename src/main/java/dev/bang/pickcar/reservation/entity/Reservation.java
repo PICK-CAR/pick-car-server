@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -133,5 +134,32 @@ public class Reservation extends BaseTimeEntity {
 
     public int calculateTotalPrice() {
         return car.getHourlyRate() * (int) startDateTime.until(endDateTime, ChronoUnit.HOURS);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Reservation that = (Reservation) o;
+        return Objects.equals(member, that.member) && Objects.equals(car, that.car);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(member, car);
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", member=" + member +
+                ", car=" + car +
+                ", startDateTime=" + startDateTime +
+                ", endDateTime=" + endDateTime +
+                ", status=" + status +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }

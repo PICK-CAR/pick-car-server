@@ -148,4 +148,39 @@ public class Car extends BaseTimeEntity {
     public void available() {
         status = CarStatus.AVAILABLE;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Car car = (Car) o;
+        return vin.equals(car.vin);
+    }
+
+    @Override
+    public int hashCode() {
+        return vin.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", model=" + model +
+                ", color='" + color + '\'' +
+                ", vin='" + vin + '\'' +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", mileage=" + mileage +
+                ", fuelLevel=" + fuelLevel +
+                ", status=" + status +
+                ", pickZone=" + pickZone +
+                ", hourlyRate=" + hourlyRate +
+                ", isDeleted=" + isDeleted +
+                '}';
+    }
 }
